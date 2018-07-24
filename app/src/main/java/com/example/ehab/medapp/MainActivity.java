@@ -1,11 +1,13 @@
 package com.example.ehab.medapp;
 
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -15,20 +17,37 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
-public class MainActivity extends AppCompatActivity {
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class MainActivity extends AppCompatActivity implements OnDateSelectedListener{
 
     private Drawer result;
-    private Toolbar toolbar;
-    private Fragment fragment;
 
+    private Fragment fragment;
+    private static final DateFormat FORMATTER = SimpleDateFormat.getDateInstance();
+    @BindView(R.id.calendarView)
+    MaterialCalendarView widget;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        AccountHeader headerResult = new AccountHeaderBuilder()
+        ButterKnife.bind(this);
+
+        widget.setOnDateChangedListener(this);
+
+
+
+              AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.side_nav_bar)
                 .addProfiles(
@@ -89,5 +108,10 @@ public class MainActivity extends AppCompatActivity {
                         return false;
                     }
                 }).build();
+    }
+
+    @Override
+    public void onDateSelected(@NonNull MaterialCalendarView materialCalendarView, @NonNull CalendarDay calendarDay, boolean b) {
+        Toast.makeText(this, ""+FORMATTER.format(calendarDay.getDate()), Toast.LENGTH_SHORT).show();
     }
 }
