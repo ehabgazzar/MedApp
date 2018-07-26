@@ -27,14 +27,13 @@ import java.text.SimpleDateFormat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements OnDateSelectedListener{
+public class MainActivity extends AppCompatActivity{
 
     private Drawer result;
 
     private Fragment fragment;
-    private static final DateFormat FORMATTER = SimpleDateFormat.getDateInstance();
-    @BindView(R.id.calendarView)
-    MaterialCalendarView widget;
+
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @Override
@@ -42,8 +41,6 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        widget.setOnDateChangedListener(this);
 
 
 
@@ -108,10 +105,12 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
                         return false;
                     }
                 }).build();
+        fragment= new TimelineFragment();
+        FragmentTransaction fragmentTransaction =
+                getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.commit();
     }
 
-    @Override
-    public void onDateSelected(@NonNull MaterialCalendarView materialCalendarView, @NonNull CalendarDay calendarDay, boolean b) {
-        Toast.makeText(this, ""+FORMATTER.format(calendarDay.getDate()), Toast.LENGTH_SHORT).show();
-    }
+
 }
