@@ -20,13 +20,13 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PartDrugAdapter extends RecyclerView.Adapter<PartDrugAdapter.MyViewHolder> {
+public class DrugAdapter extends RecyclerView.Adapter<DrugAdapter.MyViewHolder> {
 
 
     private ArrayList<Drug> drugsList;
 
     private Context mContext;
-    public PartDrugAdapter(ArrayList<Drug> drugsList, Context context) {
+    public DrugAdapter(ArrayList<Drug> drugsList, Context context) {
         this.drugsList = drugsList;
         mContext=context;
     }
@@ -34,7 +34,7 @@ public class PartDrugAdapter extends RecyclerView.Adapter<PartDrugAdapter.MyView
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.part_drug_item, parent, false);
+                .inflate(R.layout.drug_item, parent, false);
         return new MyViewHolder(itemView);
     }
 
@@ -50,32 +50,7 @@ public class PartDrugAdapter extends RecyclerView.Adapter<PartDrugAdapter.MyView
             }
         });
 
-        if(drug.isTaken()) {
-            holder.cbAction.setChecked(true);
-            holder.cbAction.setBackground(mContext.getResources().getDrawable(R.drawable.checked));
-            holder.ivStatus.setImageResource(R.drawable.bluedot);
 
-        }
-       else {
-            holder.cbAction.setChecked(false);
-            holder.cbAction.setBackground(mContext.getResources().getDrawable(R.drawable.check));
-            holder.ivStatus.setImageResource(R.drawable.blueborderdot);
-        }
-        holder.cbAction.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Toast.makeText(mContext, ""+position, Toast.LENGTH_SHORT).show();
-                if(holder.cbAction.isChecked()) {
-                    holder.cbAction.setBackground(mContext.getResources().getDrawable(R.drawable.checked));
-                    holder.ivStatus.setImageResource(R.drawable.bluedot);
-                }
-                else {
-                    holder.cbAction.setBackground(mContext.getResources().getDrawable(R.drawable.check));
-
-                    holder.ivStatus.setImageResource(R.drawable.blueborderdot);
-                }
-            }
-        });
 
 
 
@@ -95,11 +70,8 @@ public class PartDrugAdapter extends RecyclerView.Adapter<PartDrugAdapter.MyView
         @BindView(R.id.drug_tv_descr)
         TextView tvDescription;
 
-        @BindView(R.id.drug_iv_status)
-        ImageView ivStatus;
  
-        @BindView(R.id.drug_cb)
-        CheckBox cbAction;
+
 
         public MyViewHolder(View view) {
             super(view);

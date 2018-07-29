@@ -15,6 +15,14 @@ public class Drug {
         this.taken = taken;
     }
 
+    public Drug(String id, String name, String dose, String dateTime, String description) {
+        this.id = id;
+        this.name = name;
+        this.dose = dose;
+        this.dateTime = dateTime;
+        this.description = description;
+    }
+
     public boolean isTaken() {
         return taken;
     }

@@ -1,14 +1,15 @@
 package com.example.ehab.medapp;
 
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.TextView;
 
+import com.example.ehab.medapp.fragments.MedsFragment;
+import com.example.ehab.medapp.fragments.TimelineFragment;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -17,12 +18,6 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.prolificinteractive.materialcalendarview.CalendarDay;
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
-import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +31,9 @@ public class MainActivity extends AppCompatActivity{
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,18 +49,17 @@ public class MainActivity extends AppCompatActivity{
                         new ProfileDrawerItem().withName("Name" + " " +"last name").withEmail("email").withIcon(R.mipmap.ic_launcher)
                 ).withSelectionListEnabledForSingleProfile(false)
                 .build();
-        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName("Orders");
-        PrimaryDrawerItem item2 = new PrimaryDrawerItem().withIdentifier(2).withName("Requests");
-
-//            PrimaryDrawerItem item3 = new PrimaryDrawerItem().withIdentifier(3).withName("Settings");
-        PrimaryDrawerItem item4 = new PrimaryDrawerItem().withIdentifier(4).withName("Logout");
+        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName("Timeline");
+        PrimaryDrawerItem item2 = new PrimaryDrawerItem().withIdentifier(2).withName("Medicines");
+        PrimaryDrawerItem item3 = new PrimaryDrawerItem().withIdentifier(3).withName("Measurements");
+        PrimaryDrawerItem item4 = new PrimaryDrawerItem().withIdentifier(4).withName("Settings");
 
         result = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withAccountHeader(headerResult)
                 .addDrawerItems(
-                        item1, item2, new DividerDrawerItem(),  item4
+                        item1, item2,item3, new DividerDrawerItem(),item4
 
                 ) .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -72,10 +69,10 @@ public class MainActivity extends AppCompatActivity{
 
                             case 1:
                                 fragment = null;
-                            //    fragment = new OrdersFragment();
+                                fragment = new TimelineFragment();
                                 if (fragment != null) {
 
-//                                    toolbar.setTitle("Orders");
+                                    toolbarTitle.setText("Timeline");
                                     FragmentTransaction fragmentTransaction =
                                             getSupportFragmentManager().beginTransaction();
                                     fragmentTransaction.replace(R.id.fragment_container, fragment);
@@ -86,10 +83,10 @@ public class MainActivity extends AppCompatActivity{
 
                             case 2:
                                 fragment = null;
-                         //       fragment = new RequestsFragment();
+                                fragment = new MedsFragment();
                                 if (fragment != null) {
 
-//                                    toolbar.setTitle("Requests");
+                                    toolbarTitle.setText("Medicines");
                                     FragmentTransaction fragmentTransaction =
                                             getSupportFragmentManager().beginTransaction();
                                     fragmentTransaction.replace(R.id.fragment_container, fragment);
@@ -112,5 +109,13 @@ public class MainActivity extends AppCompatActivity{
         fragmentTransaction.commit();
     }
 
-
+    @Override
+    public void onBackPressed() {
+        //handle the back press :D close the drawer first and if the drawer is closed close the activity
+        if (result != null && result.isDrawerOpen()) {
+            result.closeDrawer();
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

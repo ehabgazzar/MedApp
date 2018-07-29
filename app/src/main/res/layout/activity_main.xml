@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Time Line"
+            android:text="Timeline"
             android:textColor="@color/white" />
 
     </android.support.v7.widget.Toolbar>
