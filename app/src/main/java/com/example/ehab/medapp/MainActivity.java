@@ -1,5 +1,7 @@
 package com.example.ehab.medapp;
 
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -31,7 +33,8 @@ public class MainActivity extends AppCompatActivity{
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
     @Override
@@ -40,13 +43,20 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
               AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.side_nav_bar)
                 .addProfiles(
-                        new ProfileDrawerItem().withName("Name" + " " +"last name").withEmail("email").withIcon(R.mipmap.ic_launcher)
+                        new ProfileDrawerItem().withName("Name" + " " +"last name").withEmail("email")
+                                .withIcon(R.mipmap.ic_launcher)
                 ).withSelectionListEnabledForSingleProfile(false)
                 .build();
         PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName("Timeline");
@@ -78,6 +88,14 @@ public class MainActivity extends AppCompatActivity{
                                     fragmentTransaction.replace(R.id.fragment_container, fragment);
                                     fragmentTransaction.commit();
                                     onBackPressed();
+                                    fab.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            Snackbar.make(view, "Replace with your own action",
+                                                    Snackbar.LENGTH_LONG)
+                                                    .setAction("Action", null).show();
+                                        }
+                                    });
                                 }
                                 break;
 
@@ -92,6 +110,13 @@ public class MainActivity extends AppCompatActivity{
                                     fragmentTransaction.replace(R.id.fragment_container, fragment);
                                     fragmentTransaction.commit();
                                     onBackPressed();
+                                    fab.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            Snackbar.make(view, "Na action", Snackbar.LENGTH_LONG)
+                                                    .setAction("Action", null).show();
+                                        }
+                                    });
                                 }
                                 break;
                             case 4:
