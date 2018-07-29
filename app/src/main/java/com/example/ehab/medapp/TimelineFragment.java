@@ -59,7 +59,10 @@ public class TimelineFragment extends Fragment  implements OnDateSelectedListene
         Drug drug;
         for(int i = 1 ; i <5;i++)
         {
-            drug= new Drug(""+i,"Drug "+i,"1","10:30 AM","Short Des Short Des");
+            if(i%2==0)
+              drug= new Drug(""+i,"Drug "+i,"1","10:30 AM","Short Des Short Des",true);
+            else
+                drug= new Drug(""+i,"Drug "+i,"1","10:30 AM","Short Des Short Des",false);
             drugs.add(drug);
         }
         DayPart dayPart1= new DayPart("Morning",drugs);

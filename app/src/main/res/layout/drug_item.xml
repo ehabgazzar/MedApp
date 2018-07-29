@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="2dp"
     android:layout_marginTop="16dp">
 
     <ImageView
         android:id="@+id/drug_iv_status"
         android:layout_width="16dp"
         android:layout_height="16dp"
-
+        android:src="@drawable/blueborderdot"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/bluedot" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/drug_tv_time"

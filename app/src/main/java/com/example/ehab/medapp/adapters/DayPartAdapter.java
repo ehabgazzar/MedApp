@@ -44,7 +44,7 @@ public class DayPartAdapter extends RecyclerView.Adapter<DayPartAdapter.MyViewHo
         LinearLayoutManager hs_linearLayout = new LinearLayoutManager(this.activity, LinearLayoutManager.VERTICAL, false);
         holder.partsRecycler.setLayoutManager(hs_linearLayout);
         holder.partsRecycler.setHasFixedSize(true);
-        PartDrugAdapter drugAdapter = new PartDrugAdapter(dayParts.get(position).getDrugs());
+        PartDrugAdapter drugAdapter = new PartDrugAdapter(dayParts.get(position).getDrugs(),activity);
         holder.partsRecycler.setAdapter(drugAdapter);
     }
 
