@@ -46,8 +46,14 @@ public class MainActivity extends AppCompatActivity{
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                fragment = new AddMedsFragment();
+                toolbarTitle.setText("Add med");
+                FragmentTransaction fragmentTransaction =
+                        getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
             }
         });
 
@@ -91,9 +97,15 @@ public class MainActivity extends AppCompatActivity{
                                     fab.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
-                                            Snackbar.make(view, "Replace with your own action",
-                                                    Snackbar.LENGTH_LONG)
-                                                    .setAction("Action", null).show();
+                                            fragment = new AddMedsFragment();
+                                            toolbarTitle.setText("Add med");
+                                            FragmentTransaction fragmentTransaction =
+                                                    getSupportFragmentManager().beginTransaction();
+                                            fragmentTransaction.replace(R.id.fragment_container, fragment);
+                                            fragmentTransaction.commit();
+//                                            Snackbar.make(view, "Replace with your own action",
+//                                                    Snackbar.LENGTH_LONG)
+//                                                    .setAction("Action", null).show();
                                         }
                                     });
                                 }

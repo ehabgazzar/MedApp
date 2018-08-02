@@ -98,6 +98,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:ems="10"
+                    android:hint="pick a time"
                     android:inputType="time"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/sp_meds_times_repeat" />
@@ -112,7 +113,8 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:ems="10"
-                    android:inputType="number"
+                    android:hint="enter "
+                    android:inputType="numberDecimal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView4"
                     app:layout_constraintTop_toBottomOf="@+id/sp_meds_times_repeat" />
@@ -129,7 +131,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/sp_meds_times_repeat" />
 
                 <RadioGroup
-                    android:id="@+id/rg_meds_schedual"
+                    android:id="@+id/rg_meds_schedule"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -157,19 +159,37 @@
                         android:text="Spacific Days" />
                 </RadioGroup>
 
-                <ListView
+                <android.support.v7.widget.RecyclerView
                     android:id="@+id/list_meds_days"
-                    android:orientation="horizontal"
                     android:layout_width="0dp"
-                    android:layout_height="160dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rg_meds_schedual" />
+                    app:layout_constraintTop_toBottomOf="@+id/rg_meds_schedule" />
+
+                <Button
+                    android:id="@+id/bt_meds_add"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@color/accent"
+                    android:text="Add"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
             </android.support.constraint.ConstraintLayout>
         </LinearLayout>

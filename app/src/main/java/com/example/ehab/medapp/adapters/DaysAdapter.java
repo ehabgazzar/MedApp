@@ -1,53 +1,93 @@
 package com.example.ehab.medapp.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CheckedTextView;
-import android.widget.Toast;
 
+import com.example.ehab.medapp.ClickListener;
 import com.example.ehab.medapp.R;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DaysAdapter extends BaseAdapter {
+public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ViewHolder> {
     String[] names;
-    Context context;
-    LayoutInflater inflter;
+    ArrayList<String> daysCheck=new ArrayList<>();
+    private  Context context;
+    private  LayoutInflater layoutInflater;
 
-    HashMap<String,String> daysCheck=new HashMap<String, String>();
 
-    public DaysAdapter(Context context, String[] names) {
+    public DaysAdapter(Context context, String[] names,ClickListener listener) {
         this.context = context;
         this.names = names;
-        inflter = (LayoutInflater.from(context));
+        layoutInflater = (LayoutInflater.from(context));
+
 
     }
 
+
+
+    @NonNull
     @Override
-    public int getCount() {
-        return names.length;
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = layoutInflater.inflate(R.layout.day_item, parent, false);
+        DaysAdapter.ViewHolder viewHolder = new DaysAdapter.ViewHolder(view);
+
+        return viewHolder;
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+
+        final ViewHolder hold=holder;
+        holder.simpleCheckedTextView.setText(names[position]);
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (hold.simpleCheckedTextView.isChecked()) {
+// set cheek mark drawable and set checked property to false
+                 //   value = "un-Checked";
+                    daysCheck.remove(names[position]);
+                    hold.simpleCheckedTextView.setChecked(false);
+                    hold.cardView.setBackgroundColor(context.getResources().getColor(R.color.cardview_light_background));
+                } else {
+// set cheek mark drawable and set checked property to true
+                  //  value = "Checked";
+                    daysCheck.add(names[position]);
+                    hold.simpleCheckedTextView.setChecked(true);
+                    hold.cardView.setBackgroundColor(context.getResources().getColor(R.color.primary));
+                }
+
+
+            }
+        });
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
+    public int getItemCount() {
+        return names.length;
+    }
+
+
+
+
+    /*@Override
     public View getView(int position, View view, ViewGroup parent) {
         view = inflter.inflate(R.layout.day_item, null);
-        final CheckedTextView simpleCheckedTextView = (CheckedTextView) view.findViewById(R.id.tv_day_check);
-        simpleCheckedTextView.setText(names[position]);
+
 // perform on Click Event Listener on CheckedTextView
-        simpleCheckedTextView.setOnClickListener(new View.OnClickListener() {
+       *//* simpleCheckedTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (simpleCheckedTextView.isChecked()) {
@@ -64,7 +104,25 @@ public class DaysAdapter extends BaseAdapter {
                 }
                 Toast.makeText(context, value, Toast.LENGTH_SHORT).show();
             }
-        });
+        });*//*
         return view;
+    }
+
+*/
+
+    public static class ViewHolder extends RecyclerView.ViewHolder  {
+
+         CheckedTextView simpleCheckedTextView ;
+         CardView cardView;
+
+
+        public ViewHolder(View view) {
+            super(view);
+            cardView= view.findViewById(R.id.day_card);
+            simpleCheckedTextView = (CheckedTextView) view.findViewById(R.id.tv_day_check);
+
+        }
+
+
     }
 }
