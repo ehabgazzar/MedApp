@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.ehab.medapp.fragments.MedsFragment;
+import com.example.ehab.medapp.fragments.PressureFragment;
 import com.example.ehab.medapp.fragments.TimelineFragment;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -131,8 +132,25 @@ public class MainActivity extends AppCompatActivity{
                                     });
                                 }
                                 break;
-                            case 4:
+                            case 3:
+                                fragment = null;
+                                fragment = new PressureFragment();
+                                if (fragment != null) {
 
+                                    toolbarTitle.setText("Measurements");
+                                    FragmentTransaction fragmentTransaction =
+                                            getSupportFragmentManager().beginTransaction();
+                                    fragmentTransaction.replace(R.id.fragment_container, fragment);
+                                    fragmentTransaction.commit();
+                                    onBackPressed();
+                                    fab.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            Snackbar.make(view, "Na action", Snackbar.LENGTH_LONG)
+                                                    .setAction("Action", null).show();
+                                        }
+                                    });
+                                }
                                 break;
 
                         }

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+
+    <TextView
+        android:id="@+id/tv_pressure_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="25/8/2018"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_pressure_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="8:35 AM"
+        app:layout_constraintEnd_toEndOf="@+id/tv_pressure_date"
+        app:layout_constraintStart_toStartOf="@+id/tv_pressure_date"
+        app:layout_constraintTop_toBottomOf="@+id/tv_pressure_date" />
+
+    <TextView
+        android:id="@+id/tv_pressure_measure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:text="120/80"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_pressure_date"
+        app:layout_constraintStart_toEndOf="@+id/tv_pressure_date"
+        app:layout_constraintTop_toTopOf="@+id/tv_pressure_date"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/tv_pressure_comment"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="28dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="8dp"
+        android:text="baskk kkosal afsklklasd kllsda kladlklk akl sad klk "
+        app:layout_constraintStart_toEndOf="@+id/tv_pressure_time"
+        app:layout_constraintTop_toBottomOf="@+id/tv_pressure_measure" />
+
+</android.support.constraint.ConstraintLayout>

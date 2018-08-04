@@ -42,7 +42,7 @@ public class PartDrugAdapter extends RecyclerView.Adapter<PartDrugAdapter.MyView
     public void onBindViewHolder(final MyViewHolder holder,final int position) {
         Drug drug = drugsList.get(position);
         holder.tvName.setText(drug.getName());
-        holder.tvDescription.setText(drug.getDescription());
+//        holder.tvDescription.setText(drug.getDescription());
         holder.tvName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

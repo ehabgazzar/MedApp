@@ -1,26 +1,39 @@
 package com.example.ehab.medapp.models;
 
+import java.util.ArrayList;
+
 public class Drug {
 
-    String id,name,dose,dateTime,description;
+    String id,name,dose, time,schedule,reminder;
     boolean taken;
+    ArrayList<String> days;
 
-
-    public Drug(String id, String name, String dose, String dateTime, String description, boolean taken) {
+    public Drug(String id, String name, String dose, String time, String schedule, boolean taken, ArrayList<String> days) {
+        this.days =new ArrayList<>();
         this.id = id;
         this.name = name;
         this.dose = dose;
-        this.dateTime = dateTime;
-        this.description = description;
+        this.time = time;
+        this.schedule = schedule;
+        this.taken = taken;
+        this.days = days;
+    }
+
+    public Drug(String id, String name, String dose, String time, String schedule, boolean taken) {
+        this.id = id;
+        this.name = name;
+        this.dose = dose;
+        this.time = time;
+        this.schedule = schedule;
         this.taken = taken;
     }
 
-    public Drug(String id, String name, String dose, String dateTime, String description) {
+    public Drug(String id, String name, String dose, String time, String schedule) {
         this.id = id;
         this.name = name;
         this.dose = dose;
-        this.dateTime = dateTime;
-        this.description = description;
+        this.time = time;
+        this.schedule = schedule;
     }
 
     public boolean isTaken() {
@@ -39,12 +52,16 @@ public class Drug {
         return dose;
     }
 
-    public String getDateTime() {
-        return dateTime;
+    public String getTime() {
+        return time;
     }
 
-    public String getDescription() {
-        return description;
+    public String getSchedule() {
+        return schedule;
+    }
+
+    public ArrayList<String> getDays() {
+        return days;
     }
 
     public void setTaken(boolean taken) {
