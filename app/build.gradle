@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.example.ehab.medapp"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -45,5 +45,6 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'joda-time:joda-time:2.10'
     implementation 'com.wdullaer:materialdatetimepicker:3.6.3'
+    implementation 'com.github.AnyChart:AnyChart-Android:0.3.0'
 
 }

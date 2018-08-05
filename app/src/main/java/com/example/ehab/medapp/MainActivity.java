@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.ehab.medapp.fragments.MedsFragment;
 import com.example.ehab.medapp.fragments.PressureFragment;
 import com.example.ehab.medapp.fragments.TimelineFragment;
+import com.example.ehab.medapp.fragments.WeightFragment;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -134,7 +135,7 @@ public class MainActivity extends AppCompatActivity{
                                 break;
                             case 3:
                                 fragment = null;
-                                fragment = new PressureFragment();
+                                fragment = new WeightFragment();
                                 if (fragment != null) {
 
                                     toolbarTitle.setText("Measurements");
