@@ -12,10 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ehab.medapp.R;
-import com.example.ehab.medapp.adapters.DrugAdapter;
-import com.example.ehab.medapp.adapters.PressureAdapter;
-import com.example.ehab.medapp.models.BloodPressure;
-import com.example.ehab.medapp.models.Drug;
+import com.example.ehab.medapp.adapters.MeasurementsAdapter;
+import com.example.ehab.medapp.models.Measure;
 
 import java.util.ArrayList;
 
@@ -28,7 +26,7 @@ import butterknife.ButterKnife;
 public class PressureFragment extends Fragment {
     @BindView(R.id.pressure_recyclerView)
     RecyclerView drugRecycler;
-    PressureAdapter event_list_parent_adapter;
+    MeasurementsAdapter event_list_parent_adapter;
 
     public PressureFragment() {
         // Required empty public constructor
@@ -41,16 +39,16 @@ public class PressureFragment extends Fragment {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_pressure, container, false);
         ButterKnife.bind(this,view);
-        ArrayList<BloodPressure> drugs= new ArrayList<>();
-        BloodPressure drug;
+        ArrayList<Measure> drugs= new ArrayList<>();
+        Measure drug;
         for(int i = 1 ; i <5;i++)
         {
-            drug= new BloodPressure("25/8/2018",i+":30 PM ","120 / 80","Any comment Any comment Any comment");
+            drug= new Measure("25/8/2018",i+":30 PM ","120 / 80","Any comment Any comment Any comment");
             drugs.add(drug);
 
         }
 
-        event_list_parent_adapter = new PressureAdapter(drugs,getActivity());
+        event_list_parent_adapter = new MeasurementsAdapter(drugs,getActivity());
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         drugRecycler.setLayoutManager(mLayoutManager);

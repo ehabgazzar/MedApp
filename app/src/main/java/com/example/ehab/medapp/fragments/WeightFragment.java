@@ -1,34 +1,37 @@
 package com.example.ehab.medapp.fragments;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.anychart.anychart.AnyChart;
-import com.anychart.anychart.AnyChartView;
-import com.anychart.anychart.Cartesian;
-import com.anychart.anychart.CartesianSeriesLine;
-import com.anychart.anychart.DataEntry;
-import com.anychart.anychart.EnumsAnchor;
-import com.anychart.anychart.Mapping;
-import com.anychart.anychart.MarkerType;
-import com.anychart.anychart.Set;
-import com.anychart.anychart.Stroke;
-import com.anychart.anychart.TooltipPositionMode;
-import com.anychart.anychart.ValueDataEntry;
+
 import com.example.ehab.medapp.R;
+import com.example.ehab.medapp.adapters.MeasurementsAdapter;
+import com.example.ehab.medapp.models.Measure;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import im.dacer.androidcharts.LineView;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class WeightFragment extends Fragment {
 
+    @BindView(R.id.weight_recyclerView)
+    RecyclerView drugRecycler;
+    MeasurementsAdapter event_list_parent_adapter;
 
     public WeightFragment() {
         // Required empty public constructor
@@ -40,33 +43,67 @@ public class WeightFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_weight, container, false);
-        AnyChartView anyChartView = view.findViewById(R.id.any_chart_view);
-        anyChartView.setProgressBar(view.findViewById(R.id.progress_bar));
-        Cartesian cartesian = AnyChart.line();
-        cartesian.setAnimation(true);
+        final LineView lineView = (LineView) view.findViewById(R.id.line_view);
+        initLineView(lineView);
+        ButterKnife.bind(this,view);
+        ArrayList<Measure> drugs= new ArrayList<>();
+        Measure drug;
+        for(int i = 1 ; i <5;i++)
+        {
+            drug= new Measure("25/8/2018",i+":30 PM ",i+" KG","Any comment Any comment Any comment");
+            drugs.add(drug);
 
-        cartesian.setPadding(10d, 20d, 5d, 20d);
+        }
 
-        cartesian.getCrosshair().setEnabled(true);
-        cartesian.getCrosshair()
-                .setYLabel(true)
-                .setYStroke((Stroke) null, null, null, null, null);
+        event_list_parent_adapter = new MeasurementsAdapter(drugs,getActivity());
 
-        cartesian.getTooltip().setPositionMode(TooltipPositionMode.POINT);
-
-        cartesian.setTitle("Trend of Sales of the Most Popular Products of ACME Corp.");
-
-        cartesian.getYAxis().setTitle("Number of Bottles Sold (thousands)");
-        cartesian.getXAxis().getLabels().setPadding(5d, 5d, 5d, 5d);
-        List<DataEntry> data = new ArrayList<>();
-        data.add(new ValueDataEntry("1995", 10000));
-        data.add(new ValueDataEntry("1996", 12000));
-        data.add(new ValueDataEntry("1997", 18000));
-
-        anyChartView.setChart(cartesian);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        drugRecycler.setLayoutManager(mLayoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(drugRecycler.getContext(), mLayoutManager.getOrientation());
+        drugRecycler.addItemDecoration(dividerItemDecoration);
+        drugRecycler.setItemAnimator(new DefaultItemAnimator());
+        drugRecycler.setAdapter(event_list_parent_adapter);
         return view;
     }
 
+    private void initLineView(LineView lineView) {
+        ArrayList<String> test = new ArrayList<String>();
+        for (int i = 0; i < 10; i++) {
+            test.add(String.valueOf(i + 1));
+        }
+        lineView.setBottomTextList(test);
+        lineView.setColorArray(new int[] {
+                Color.parseColor("#F44336"), Color.parseColor("#9C27B0"),
+                Color.parseColor("#2196F3"), Color.parseColor("#009688")
+        });
+        lineView.setDrawDotLine(true);
+        lineView.setShowPopup(LineView.SHOW_POPUPS_NONE);
+
+        ArrayList<Integer> measurements = new ArrayList<>();
+        float random = (float) (Math.random() * 9 + 1);
+        for (int i = 0; i < 10; i++) {
+            measurements.add((int) (Math.random() * random));
+        }
 
 
+
+        ArrayList<ArrayList<Integer>> dataLists = new ArrayList<>();
+        dataLists.add(measurements);
+//        dataLists.add(dataList2);
+
+        ArrayList<String> dates = new ArrayList<>();
+        dates.add("1/7/2018");
+        dates.add("2/7/2018");
+        dates.add("3/7/2018");
+        dates.add("4/7/2018");
+        dates.add("5/7/2018");
+        dates.add("6/7/2018");
+        dates.add("2/7/2018");
+        dates.add("3/7/2018");
+        dates.add("4/7/2018");
+        dates.add("5/7/2018");
+        dates.add("6/7/2018");
+        lineView.setBottomTextList(dates);
+        lineView.setDataList(dataLists);
+    }
 }

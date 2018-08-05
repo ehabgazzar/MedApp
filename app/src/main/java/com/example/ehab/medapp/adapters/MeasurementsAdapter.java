@@ -2,29 +2,27 @@ package com.example.ehab.medapp.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ehab.medapp.R;
-import com.example.ehab.medapp.models.BloodPressure;
-import com.example.ehab.medapp.models.Drug;
+import com.example.ehab.medapp.models.Measure;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PressureAdapter extends RecyclerView.Adapter<PressureAdapter.MyViewHolder> {
+public class MeasurementsAdapter extends RecyclerView.Adapter<MeasurementsAdapter.MyViewHolder> {
 
 
-    private ArrayList<BloodPressure> bloodPressures;
+    private ArrayList<Measure> measures;
 
     private Context mContext;
-    public PressureAdapter(ArrayList<BloodPressure> bloodPressures, Context context) {
-        this.bloodPressures = bloodPressures;
+    public MeasurementsAdapter(ArrayList<Measure> measures, Context context) {
+        this.measures = measures;
         mContext=context;
     }
 
@@ -37,7 +35,7 @@ public class PressureAdapter extends RecyclerView.Adapter<PressureAdapter.MyView
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder,final int position) {
-        BloodPressure pressure = bloodPressures.get(position);
+        Measure pressure = measures.get(position);
         holder.tvComment.setText(pressure.getComment());
         holder.tvDate.setText(pressure.getDate());
         holder.tvTime.setText(pressure.getTime());
@@ -47,7 +45,7 @@ public class PressureAdapter extends RecyclerView.Adapter<PressureAdapter.MyView
 
     @Override
     public int getItemCount() {
-        return bloodPressures.size();
+        return measures.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

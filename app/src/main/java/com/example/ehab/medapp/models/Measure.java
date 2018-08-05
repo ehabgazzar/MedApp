@@ -1,9 +1,9 @@
 package com.example.ehab.medapp.models;
 
-public class BloodPressure {
+public class Measure {
     String date,time,measure,comment;
 
-    public BloodPressure(String date, String time, String measure, String comment) {
+    public Measure(String date, String time, String measure, String comment) {
         this.date = date;
         this.time = time;
         this.measure = measure;
