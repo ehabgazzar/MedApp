@@ -9,7 +9,7 @@
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
-        android:layout_height="128dp"
+        android:layout_height="126dp"
         android:background="@color/colorPrimaryDark"
         app:mcv_arrowColor="@color/selection"
         app:mcv_calendarMode="week"

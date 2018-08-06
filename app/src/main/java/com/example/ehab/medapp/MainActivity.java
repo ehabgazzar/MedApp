@@ -1,5 +1,6 @@
 package com.example.ehab.medapp;
 
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -31,7 +32,8 @@ public class MainActivity extends AppCompatActivity{
     private Drawer result;
 
     private Fragment fragment;
-
+    public final static String LIST_STATE_KEY = "recycler_list_state";
+    Parcelable listState;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -158,12 +160,16 @@ public class MainActivity extends AppCompatActivity{
                         return false;
                     }
                 }).build();
-        fragment= new TimelineFragment();
-        FragmentTransaction fragmentTransaction =
-                getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment);
-        fragmentTransaction.commit();
+        if(savedInstanceState==null && fragment==null) {
+            fragment = new TimelineFragment();
+            FragmentTransaction fragmentTransaction =
+                    getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, fragment);
+            fragmentTransaction.commit();
+        }
     }
+
+
 
     @Override
     public void onBackPressed() {
