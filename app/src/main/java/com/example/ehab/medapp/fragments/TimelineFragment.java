@@ -1,6 +1,7 @@
 package com.example.ehab.medapp.fragments;
 
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -20,9 +21,7 @@ import com.example.ehab.medapp.adapters.DayPartAdapter;
 import com.example.ehab.medapp.adapters.PartDrugAdapter;
 import com.example.ehab.medapp.models.DayPart;
 import com.example.ehab.medapp.models.Drug;
-import com.prolificinteractive.materialcalendarview.CalendarDay;
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
-import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -35,7 +34,7 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TimelineFragment extends Fragment implements OnDateSelectedListener {
+public class TimelineFragment extends Fragment  {
 
     @BindView(R.id.event_recycler_view_parent)
     RecyclerView event_recycler_view_parent;
@@ -56,7 +55,7 @@ public class TimelineFragment extends Fragment implements OnDateSelectedListener
         // Save list state
         listState = mLayoutManager.onSaveInstanceState();
         state.putParcelable(LIST_STATE_KEY, listState);
-        state.putString("test", " ========================== Test 1");
+
     }
 
 
@@ -71,9 +70,9 @@ public class TimelineFragment extends Fragment implements OnDateSelectedListener
         super.onViewCreated(view, savedInstanceState);
         // Retrieve list state and list/item positions
         if (savedInstanceState != null) {
-            Log.d("Oriantion", savedInstanceState.getString("test"));
+
             listState = savedInstanceState.getParcelable(LIST_STATE_KEY);
-//            event_recycler_view_parent.getLayoutManager().scrollToPosition(3);
+
         }
 
     }
@@ -121,23 +120,16 @@ public class TimelineFragment extends Fragment implements OnDateSelectedListener
         dayParts.add(dayPart3);
         dayParts.add(dayPart4);
 
+        Configuration config = getActivity().getResources().getConfiguration();
+
         event_list_parent_adapter = new DayPartAdapter(dayParts, getActivity());
         event_recycler_view_parent.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         event_recycler_view_parent.setLayoutManager(mLayoutManager);
+
         event_recycler_view_parent.setItemAnimator(new DefaultItemAnimator());
         event_recycler_view_parent.setAdapter(event_list_parent_adapter);
     }
 
-    @Override
-    public void onDateSelected(@NonNull MaterialCalendarView materialCalendarView, @NonNull CalendarDay calendarDay, boolean b) {
-        Toast.makeText(getActivity(), "" + FORMATTER.format(calendarDay.getDate()), Toast.LENGTH_SHORT).show();
-    }
 
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-
-
-    }
 }

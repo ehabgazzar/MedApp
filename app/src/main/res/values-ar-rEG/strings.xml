@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MedApp</string>
+    <string name="time_line">"المخطط الزمني "</string>
+    <string name="blood_pressure">"ضغط الدم "</string>
+    <string name="weight">الوزن</string>
+    <string name="medicines">العقاقير</string>
+    <string name="add_medicine">اضف دواء</string>
+    <string name="settings">الاعدادات</string>
+    <string name="measurements">القياسات</string>
+    <string name="mediciton_name">إسم الدواء</string>
+    <string name="reminder_times">"مرات التذكير "</string>
+    <string name="search_here">"ابحث هنا "</string>
+    <string name="pick_a_time">"إختر الوقت "</string>
+    <string name="enter">"إدخل "</string>
+    <string name="dose">"الجرعه "</string>
+    <string name="every_day">يوميا</string>
+    <string name="spacific_days">ايام مخصصه</string>
+    <string name="add">"أضف "</string>
+    <string name="morning">"الصباح "</string>
+    <string name="afterNoon">"بعد الظهر "</string>
+    <string name="evening">"المساء "</string>
+    <string name="night">الليل</string>
+    <string name="choose_measure">"إختار قياس "</string>
+    <string name="enter_measure">"إدخل قيمة القياس "</string>
+    <string name="enter_comment">"إدخل تعليق "</string>
+    <string name="schedule">جدوله</string>
+</resources>
