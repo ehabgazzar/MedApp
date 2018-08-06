@@ -1,5 +1,6 @@
 package com.example.ehab.medapp;
 
+import android.content.Intent;
 import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -136,24 +137,8 @@ public class MainActivity extends AppCompatActivity{
                                 }
                                 break;
                             case 3:
-                                fragment = null;
-                                fragment = new WeightFragment();
-                                if (fragment != null) {
-
-                                    toolbarTitle.setText("Measurements");
-                                    FragmentTransaction fragmentTransaction =
-                                            getSupportFragmentManager().beginTransaction();
-                                    fragmentTransaction.replace(R.id.fragment_container, fragment);
-                                    fragmentTransaction.commit();
-                                    onBackPressed();
-                                    fab.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            Snackbar.make(view, "Na action", Snackbar.LENGTH_LONG)
-                                                    .setAction("Action", null).show();
-                                        }
-                                    });
-                                }
+                                Intent intent= new Intent(MainActivity.this,MeasurementsActivity.class);
+                                startActivity(intent);
                                 break;
 
                         }
