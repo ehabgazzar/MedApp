@@ -24,21 +24,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Blood Pressure " />
+            android:text="@string/blood_pressure" />
 
         <RadioButton
             android:id="@+id/rb_add_measure_weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Weight" />
+            android:text="@string/weight" />
 
         <RadioButton
             android:id="@+id/radioButton3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Fats" />
+            android:text="@string/fats" />
     </RadioGroup>
 
     <TextView
@@ -48,7 +48,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Choose Measure "
+        android:text="@string/choose_measure"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -61,7 +61,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:ems="10"
-        android:hint="Enter Measure"
+        android:hint="@string/enter_measure"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="@+id/radioGroup2"
         app:layout_constraintStart_toStartOf="@+id/radioGroup2"
@@ -74,7 +74,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="28dp"
         android:ems="10"
-        android:hint="Enter Comment"
+        android:hint="@string/enter_comment"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="@+id/et_add_measure_val"
         app:layout_constraintHorizontal_bias="0.0"
@@ -88,7 +88,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="Add"
+        android:text="@string/add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

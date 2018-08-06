@@ -26,7 +26,7 @@ public class MeasurementsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_measurements);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Measurements");
+        toolbar.setTitle(R.string.measurements);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -46,8 +46,8 @@ public class MeasurementsActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new PressureFragment(), "Blood Pressure");
-        adapter.addFragment(new WeightFragment(), "Weight");
+        adapter.addFragment(new PressureFragment(), getResources().getString(R.string.blood_pressure));
+        adapter.addFragment(new WeightFragment(), getResources().getString(R.string.weight));
 //        adapter.addFragment(new ThreeFragment(), "THREE");
         viewPager.setAdapter(adapter);
     }

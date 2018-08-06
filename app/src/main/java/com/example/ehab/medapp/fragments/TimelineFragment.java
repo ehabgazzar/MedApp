@@ -115,10 +115,10 @@ public class TimelineFragment extends Fragment implements OnDateSelectedListener
                 drug = new Drug("" + i, "Drug " + i, "1", "10:30 AM", "Short Des Short Des", false);
             drugs.add(drug);
         }
-        DayPart dayPart1 = new DayPart("Morning", drugs);
-        DayPart dayPart2 = new DayPart("AfterNoon", drugs);
-        DayPart dayPart3 = new DayPart("Evening", drugs);
-        DayPart dayPart4 = new DayPart("Night", drugs);
+        DayPart dayPart1 = new DayPart(getResources().getString(R.string.morning), drugs);
+        DayPart dayPart2 = new DayPart(getResources().getString(R.string.afterNoon), drugs);
+        DayPart dayPart3 = new DayPart(getResources().getString(R.string.evening), drugs);
+        DayPart dayPart4 = new DayPart(getResources().getString(R.string.night), drugs);
         dayParts.add(dayPart1);
         dayParts.add(dayPart2);
         dayParts.add(dayPart3);

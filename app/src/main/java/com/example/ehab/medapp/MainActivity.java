@@ -33,8 +33,7 @@ public class MainActivity extends AppCompatActivity{
     private Drawer result;
 
     private Fragment fragment;
-    public final static String LIST_STATE_KEY = "recycler_list_state";
-    Parcelable listState;
+
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 fragment = new AddMedsFragment();
-                toolbarTitle.setText("Add med");
+                toolbarTitle.setText(R.string.add_medicine);
                 FragmentTransaction fragmentTransaction =
                         getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container, fragment);
@@ -70,10 +69,10 @@ public class MainActivity extends AppCompatActivity{
                                 .withIcon(R.mipmap.ic_launcher)
                 ).withSelectionListEnabledForSingleProfile(false)
                 .build();
-        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName("Timeline");
-        PrimaryDrawerItem item2 = new PrimaryDrawerItem().withIdentifier(2).withName("Medicines");
-        PrimaryDrawerItem item3 = new PrimaryDrawerItem().withIdentifier(3).withName("Measurements");
-        PrimaryDrawerItem item4 = new PrimaryDrawerItem().withIdentifier(4).withName("Settings");
+        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.time_line);
+        PrimaryDrawerItem item2 = new PrimaryDrawerItem().withIdentifier(2).withName(R.string.medicines);
+        PrimaryDrawerItem item3 = new PrimaryDrawerItem().withIdentifier(3).withName(R.string.measurements);
+        PrimaryDrawerItem item4 = new PrimaryDrawerItem().withIdentifier(4).withName(R.string.settings);
 
         result = new DrawerBuilder()
                 .withActivity(this)
@@ -93,7 +92,7 @@ public class MainActivity extends AppCompatActivity{
                                 fragment = new TimelineFragment();
                                 if (fragment != null) {
 
-                                    toolbarTitle.setText("Timeline");
+                                    toolbarTitle.setText(R.string.time_line);
                                     FragmentTransaction fragmentTransaction =
                                             getSupportFragmentManager().beginTransaction();
                                     fragmentTransaction.replace(R.id.fragment_container, fragment);
@@ -103,7 +102,7 @@ public class MainActivity extends AppCompatActivity{
                                         @Override
                                         public void onClick(View view) {
                                             fragment = new AddMedsFragment();
-                                            toolbarTitle.setText("Add med");
+                                            toolbarTitle.setText(R.string.add_medicine);
                                             FragmentTransaction fragmentTransaction =
                                                     getSupportFragmentManager().beginTransaction();
                                             fragmentTransaction.replace(R.id.fragment_container, fragment);
@@ -121,7 +120,7 @@ public class MainActivity extends AppCompatActivity{
                                 fragment = new MedsFragment();
                                 if (fragment != null) {
 
-                                    toolbarTitle.setText("Medicines");
+                                    toolbarTitle.setText(R.string.add_medicine);
                                     FragmentTransaction fragmentTransaction =
                                             getSupportFragmentManager().beginTransaction();
                                     fragmentTransaction.replace(R.id.fragment_container, fragment);
