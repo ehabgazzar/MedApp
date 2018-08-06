@@ -39,8 +39,7 @@ public class TimelineFragment extends Fragment implements OnDateSelectedListener
 
     @BindView(R.id.event_recycler_view_parent)
     RecyclerView event_recycler_view_parent;
-    @BindView(R.id.calendarView)
-    MaterialCalendarView widget;
+
     DayPartAdapter event_list_parent_adapter;
     private static final DateFormat FORMATTER = SimpleDateFormat.getDateInstance();
     public final static String LIST_STATE_KEY = "recycler_list_state";
@@ -97,8 +96,6 @@ public class TimelineFragment extends Fragment implements OnDateSelectedListener
         View view = inflater.inflate(R.layout.fragment_timeline, container, false);
         ButterKnife.bind(this, view);
 
-
-        widget.setOnDateChangedListener(this);
 
         init();
         return view;
