@@ -21,6 +21,12 @@ import com.example.ehab.medapp.adapters.DayPartAdapter;
 import com.example.ehab.medapp.adapters.PartDrugAdapter;
 import com.example.ehab.medapp.models.DayPart;
 import com.example.ehab.medapp.models.Drug;
+import com.example.ehab.medapp.models.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 import java.text.DateFormat;
@@ -44,6 +50,9 @@ public class TimelineFragment extends Fragment  {
     public final static String LIST_STATE_KEY = "recycler_list_state";
     Parcelable listState;
     private LinearLayoutManager mLayoutManager;
+    private DatabaseReference  userRef;
+    private ValueEventListener mPostListener;
+    private FirebaseAuth mAuth;
 
     public TimelineFragment() {
         // Required empty public constructor
@@ -120,7 +129,13 @@ public class TimelineFragment extends Fragment  {
         dayParts.add(dayPart3);
         dayParts.add(dayPart4);
 
-        Configuration config = getActivity().getResources().getConfiguration();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabase = database.getReference();
+
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        mDatabase.child("users-drugs").child(firebaseUser.getUid()).child(getResources().getString(R.string.morning)).setValue(drugs);
 
         event_list_parent_adapter = new DayPartAdapter(dayParts, getActivity());
         event_recycler_view_parent.setHasFixedSize(true);

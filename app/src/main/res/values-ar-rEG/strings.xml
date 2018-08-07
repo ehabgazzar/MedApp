@@ -25,4 +25,12 @@
     <string name="enter_measure">"إدخل قيمة القياس "</string>
     <string name="enter_comment">"إدخل تعليق "</string>
     <string name="schedule">جدوله</string>
+    <string name="enter_email">إدخل البريد الالكتروني</string>
+    <string name="enter_password">إدخل كلمة المرور</string>
+    <string name="enter_name">إدخل الاسم</string>
+    <string name="sign_up">تسجيل</string>
+    <string name="enter_age">إدخل العمر</string>
+    <string name="login_now">سجل الدخول الان !</string>
+    <string name="or">"أو "</string>
+    <string name="login">دخول</string>
 </resources>
