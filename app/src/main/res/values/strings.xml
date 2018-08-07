@@ -25,6 +25,11 @@
     <string name="enter_comment">Enter Comment</string>
     <string name="fats">Fats</string>
     <string name="schedule">Schedule</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="enter_age">Enter Age</string>
 
 
     <string-array name="reminder_array">
@@ -46,6 +51,9 @@
         <item>Saturday</item>
     </string-array>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_now">Login Now !</string>
 
 
 </resources>
