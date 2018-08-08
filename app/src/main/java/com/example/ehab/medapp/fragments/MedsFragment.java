@@ -42,12 +42,12 @@ public class MedsFragment extends Fragment {
         ButterKnife.bind(this,view);
         ArrayList<Drug> drugs= new ArrayList<>();
         Drug drug;
-        for(int i = 1 ; i <5;i++)
-        {
-            drug= new Drug(""+i,"Drug "+i,"1","10:30 AM","Short Des Short Des");
-            drugs.add(drug);
-
-        }
+//        for(int i = 1 ; i <5;i++)
+//        {
+//            drug= new Drug(""+i,"Drug "+i,"1","10:30 AM","Short Des Short Des");
+//            drugs.add(drug);
+//
+//        }
 
         event_list_parent_adapter = new DrugAdapter(drugs,getActivity());
 

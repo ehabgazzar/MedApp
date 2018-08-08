@@ -33,4 +33,23 @@
     <string name="login_now">سجل الدخول الان !</string>
     <string name="or">"أو "</string>
     <string name="login">دخول</string>
+
+    <string-array name="reminder_array">
+        <item>مره يوميا</item>
+        <item>كل ستة ساعات</item>
+        <item>كل ثمانية ساعات</item>
+        <item>كل إثني عشر ساعه</item>
+
+    </string-array>
+
+
+    <string-array name="weekday">
+        <item>الاحد</item>
+        <item>الاثنين</item>
+        <item>الثلاثاء</item>
+        <item>الاربعاء</item>
+        <item>الخميس</item>
+        <item>الجمعه</item>
+        <item>السبت</item>
+    </string-array>
 </resources>

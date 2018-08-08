@@ -48,6 +48,17 @@ public class DayPartAdapter extends RecyclerView.Adapter<DayPartAdapter.MyViewHo
         holder.partsRecycler.setAdapter(drugAdapter);
     }
 
+
+    public void clear() {
+
+        dayParts.clear();
+
+        notifyDataSetChanged();
+    }
+    public void addItem(ArrayList<DayPart> dayParts){
+        clear();
+        this.dayParts=dayParts;
+    }
     @Override
     public int getItemCount() {
         return dayParts.size();

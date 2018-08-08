@@ -69,6 +69,9 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ViewHolder> {
         });
     }
 
+    public ArrayList<String> getChecked() {
+        return daysCheck;
+    }
     @Override
     public long getItemId(int position) {
         return position;

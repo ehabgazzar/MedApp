@@ -24,8 +24,11 @@ import com.example.ehab.medapp.models.Drug;
 import com.example.ehab.medapp.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 
@@ -35,6 +38,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.content.ContentValues.TAG;
 
 
 /**
@@ -53,6 +58,8 @@ public class TimelineFragment extends Fragment  {
     private DatabaseReference  userRef;
     private ValueEventListener mPostListener;
     private FirebaseAuth mAuth;
+    private ArrayList<Drug> drugs;
+    private ArrayList<DayPart> dayParts;
 
     public TimelineFragment() {
         // Required empty public constructor
@@ -110,24 +117,24 @@ public class TimelineFragment extends Fragment  {
     }
 
     void init() {
-        ArrayList<DayPart> dayParts = new ArrayList<>();
-        ArrayList<Drug> drugs = new ArrayList<>();
-        Drug drug;
-        for (int i = 1; i < 5; i++) {
-            if (i % 2 == 0)
-                drug = new Drug("" + i, "Drug " + i, "1", "10:30 AM", "Short Des Short Des", true);
-            else
-                drug = new Drug("" + i, "Drug " + i, "1", "10:30 AM", "Short Des Short Des", false);
-            drugs.add(drug);
-        }
-        DayPart dayPart1 = new DayPart(getResources().getString(R.string.morning), drugs);
-        DayPart dayPart2 = new DayPart(getResources().getString(R.string.afterNoon), drugs);
-        DayPart dayPart3 = new DayPart(getResources().getString(R.string.evening), drugs);
-        DayPart dayPart4 = new DayPart(getResources().getString(R.string.night), drugs);
-        dayParts.add(dayPart1);
-        dayParts.add(dayPart2);
-        dayParts.add(dayPart3);
-        dayParts.add(dayPart4);
+      dayParts = new ArrayList<>();
+drugs = new ArrayList<>();
+
+//        for (int i = 1; i < 4; i++) {
+//            if (i % 2 == 0)
+//                drug = new Drug("" + i, "Drug " + i, "1", "10:30 AM", "Short Des Short Des", true);
+//            else
+//                drug = new Drug("" + i, "Drug " + i, "1", "10:30 AM", "Short Des Short Des", false);
+//            drugs.add(drug);
+//        }
+//        DayPart dayPart1 = new DayPart(getResources().getString(R.string.morning), drugs);
+//        DayPart dayPart2 = new DayPart(getResources().getString(R.string.afterNoon), drugs);
+//        DayPart dayPart3 = new DayPart(getResources().getString(R.string.evening), drugs);
+//        DayPart dayPart4 = new DayPart(getResources().getString(R.string.night), drugs);
+//        dayParts.add(dayPart1);
+//        dayParts.add(dayPart2);
+//        dayParts.add(dayPart3);
+//        dayParts.add(dayPart4);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabase = database.getReference();
@@ -135,9 +142,38 @@ public class TimelineFragment extends Fragment  {
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        mDatabase.child("users-drugs").child(firebaseUser.getUid()).child(getResources().getString(R.string.morning)).setValue(drugs);
+     //   mDatabase.child("users-drugs").child(firebaseUser.getUid()).child("morning").push().setValue(drugs);
+        Query myTopPostsQuery = mDatabase.child("usersDrugs").child(firebaseUser.getUid());
+        myTopPostsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    // TODO: handle the post
+                    String DayPartName=postSnapshot.getKey();
+                    Log.e("Respomnse", postSnapshot.getKey()+ " /dddd");
+                    DayPart dayPart1=null;
+                    for (DataSnapshot dataSnapshot1: postSnapshot.getChildren()) {
+                        drugs.add(dataSnapshot1.getValue(Drug.class));
+                        Log.e("obj res", drugs.get(0).getName() + " /llll");
+                         dayPart1 = new DayPart(DayPartName, drugs);
 
-        event_list_parent_adapter = new DayPartAdapter(dayParts, getActivity());
+                    }
+                    dayParts.add(dayPart1);
+
+
+                }
+                event_list_parent_adapter.addItem(dayParts);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // ...
+            }
+        });
+
+        event_list_parent_adapter = new DayPartAdapter(new ArrayList<DayPart>(), getActivity());
         event_recycler_view_parent.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         event_recycler_view_parent.setLayoutManager(mLayoutManager);

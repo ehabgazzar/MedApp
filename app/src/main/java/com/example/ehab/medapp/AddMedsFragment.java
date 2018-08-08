@@ -8,11 +8,13 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -20,9 +22,15 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.ehab.medapp.adapters.DaysAdapter;
+import com.example.ehab.medapp.models.Drug;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -42,16 +50,26 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
     Spinner spinner;
     @BindView(R.id.et_meds_time)
     EditText timeTake;
+    @BindView(R.id.et_meds_dose)
+    EditText etDose;
+    @BindView(R.id.et_meds_search)
+    EditText etName;
     @BindView(R.id.rg_meds_schedule)
-    RadioGroup schedule;
+    RadioGroup rgSchedule;
     @BindView(R.id.rb_meds_sd)
-    RadioButton sDay;
+    RadioButton rbSDay;
     @BindView(R.id.rb_meds_everyd)
-    RadioButton eDay;
+    RadioButton rbEDay;
+
+    @BindView(R.id.bt_meds_add)
+    Button Add;
     private TimePickerDialog tpd;
     private DaysAdapter daysAdapter;
     private  String[] names = null;
 
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
+    private DatabaseReference mDatabase;
 
     public AddMedsFragment() {
         // Required empty public constructor
@@ -65,6 +83,12 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
         final View view=inflater.inflate(R.layout.fragment_add_meds, container, false);
 
         ButterKnife.bind(this,view);
+         database = FirebaseDatabase.getInstance();
+         mDatabase = database.getReference();
+
+
+        mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser firebaseUser = mAuth.getCurrentUser();
         names = getResources().getStringArray(R.array.weekday);
 
 
@@ -77,6 +101,7 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
         Toast.makeText(getActivity(), "" + spinner.getSelectedItem(), Toast.LENGTH_SHORT).show();
         timeTake.setInputType(InputType.TYPE_NULL);
         timeTake.requestFocus();
+
         timeTake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,7 +145,7 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
         });
 
 
-        sDay.setOnClickListener(new View.OnClickListener() {
+        rbSDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(recyclerView.getVisibility()==View.GONE)
@@ -141,11 +166,42 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
             }
         });
 
-        eDay.setOnClickListener(new View.OnClickListener() {
+        rbEDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(recyclerView.getVisibility()==View.VISIBLE)
                     recyclerView.setVisibility(View.GONE);
+            }
+        });
+
+        Add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Drug drug=new Drug("1","asdjas","hasdsj","asdjkasjk","dasjas");
+//                mDatabase.child("usersDrugs").child(firebaseUser.getUid()).child("night").push().setValue(drug);
+
+                // get selected radio button from radioGroup
+                if (!validateForm()) {
+                    return;
+                }
+                Drug drug=null;
+                if(rbSDay.isChecked()) {
+                 ArrayList<String> checked= daysAdapter.getChecked();
+                 if(checked.size()>0) {
+
+                      drug= new Drug(etName.getText().toString(),etDose.getText().toString(),timeTake.getText().toString(),
+                             "Specific days",false,checked);
+                 }
+                 else
+                 {
+                     Toast.makeText(getActivity(), "select Day", Toast.LENGTH_SHORT).show();
+                 }
+                }
+                else {
+                     drug= new Drug(etName.getText().toString(),etDose.getText().toString(),timeTake.getText().toString(),
+                            "Specific days",false);
+                }
+                mDatabase.child("usersDrugs").child(firebaseUser.getUid()).child("night").push().setValue(drug);
             }
         });
         return view;
@@ -169,5 +225,40 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
         timeTake.setText(sdf.format(DateCal.getTime()));
     //    time=sdf.format(DateCal.getTime());
 
+    }
+
+    private boolean validateForm() {
+        boolean valid = true;
+
+
+
+
+        String time = timeTake.getText().toString();
+        if (TextUtils.isEmpty(time)) {
+            timeTake.setError("Required.");
+            valid = false;
+        } else {
+            timeTake.setError(null);
+        }
+
+
+        String dose = etDose.getText().toString();
+        if (TextUtils.isEmpty(dose)) {
+            etDose.setError("Required.");
+            valid = false;
+        } else {
+            etDose.setError(null);
+        }
+
+
+        String name = etName.getText().toString();
+        if (TextUtils.isEmpty(name)) {
+            etName.setError("Required.");
+            valid = false;
+        } else {
+            etName.setError(null);
+        }
+
+        return valid;
     }
 }
