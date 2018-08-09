@@ -118,7 +118,7 @@ public class TimelineFragment extends Fragment  {
 
     void init() {
       dayParts = new ArrayList<>();
-drugs = new ArrayList<>();
+      drugs = new ArrayList<>();
 
 //        for (int i = 1; i < 4; i++) {
 //            if (i % 2 == 0)

@@ -17,6 +17,7 @@ import java.util.HashMap;
 
 public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ViewHolder> {
     String[] names;
+    private  String[] namesEN = null;
     ArrayList<String> daysCheck=new ArrayList<>();
     private  Context context;
     private  LayoutInflater layoutInflater;
@@ -26,7 +27,7 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ViewHolder> {
         this.context = context;
         this.names = names;
         layoutInflater = (LayoutInflater.from(context));
-
+        namesEN=context.getResources().getStringArray(R.array.weekdayen);
 
     }
 
@@ -53,13 +54,13 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ViewHolder> {
                 if (hold.simpleCheckedTextView.isChecked()) {
 // set cheek mark drawable and set checked property to false
                  //   value = "un-Checked";
-                    daysCheck.remove(names[position]);
+                    daysCheck.remove(namesEN[position]);
                     hold.simpleCheckedTextView.setChecked(false);
                     hold.cardView.setBackgroundColor(context.getResources().getColor(R.color.cardview_light_background));
                 } else {
 // set cheek mark drawable and set checked property to true
                   //  value = "Checked";
-                    daysCheck.add(names[position]);
+                    daysCheck.add(namesEN[position]);
                     hold.simpleCheckedTextView.setChecked(true);
                     hold.cardView.setBackgroundColor(context.getResources().getColor(R.color.primary));
                 }

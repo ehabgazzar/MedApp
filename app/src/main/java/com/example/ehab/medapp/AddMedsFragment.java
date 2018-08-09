@@ -2,7 +2,10 @@ package com.example.ehab.medapp;
 
 
 import android.content.DialogInterface;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -23,19 +27,39 @@ import android.widget.Toast;
 
 import com.example.ehab.medapp.adapters.DaysAdapter;
 import com.example.ehab.medapp.models.Drug;
+import com.example.ehab.medapp.models.Search;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import org.joda.time.LocalTime;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.example.ehab.medapp.Utils.getDayPart;
 
 
 /**
@@ -53,7 +77,7 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
     @BindView(R.id.et_meds_dose)
     EditText etDose;
     @BindView(R.id.et_meds_search)
-    EditText etName;
+    AutoCompleteTextView etName;
     @BindView(R.id.rg_meds_schedule)
     RadioGroup rgSchedule;
     @BindView(R.id.rb_meds_sd)
@@ -70,7 +94,8 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private DatabaseReference mDatabase;
-
+    private LocalTime time;
+    ArrayAdapter<String> adapter;
     public AddMedsFragment() {
         // Required empty public constructor
     }
@@ -85,6 +110,7 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
         ButterKnife.bind(this,view);
          database = FirebaseDatabase.getInstance();
          mDatabase = database.getReference();
+
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -177,11 +203,8 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
         Add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Drug drug=new Drug("1","asdjas","hasdsj","asdjkasjk","dasjas");
-//                mDatabase.child("usersDrugs").child(firebaseUser.getUid()).child("night").push().setValue(drug);
 
-                // get selected radio button from radioGroup
-                if (!validateForm()) {
+             /*   if (!validateForm()) {
                     return;
                 }
                 Drug drug=null;
@@ -199,9 +222,26 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
                 }
                 else {
                      drug= new Drug(etName.getText().toString(),etDose.getText().toString(),timeTake.getText().toString(),
-                            "Specific days",false);
+                            "Every day",false);
                 }
-                mDatabase.child("usersDrugs").child(firebaseUser.getUid()).child("night").push().setValue(drug);
+                mDatabase.child("usersDrugs").child(firebaseUser.getUid()).child(getDayPart(time)).push().setValue(drug).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Write was successful!
+                        // ...
+                        Toast.makeText(getActivity(), "Drug Add Successfully", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // Write failed
+                                // ...
+                                Toast.makeText(getActivity(), "Failed To Add New Drug", Toast.LENGTH_SHORT).show();
+                            }
+                        });*/
+
+                new FetchMoiveTask().execute("trilep"+"%");
             }
         });
         return view;
@@ -217,7 +257,7 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
     public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
         DateCal.set(Calendar.HOUR_OF_DAY, hourOfDay);
         DateCal.set(Calendar.MINUTE, minute);
-
+        time = new LocalTime(hourOfDay, minute, second);
         String myFormat = "hh:mm a";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
@@ -261,4 +301,120 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
 
         return valid;
     }
+
+
+
+        public class FetchMoiveTask extends AsyncTask<String, Void,List<Search>> {
+
+            private final String LOG_TAG = FetchMoiveTask.class.getSimpleName();
+
+
+            private List<Search> getWeatherDataFromJson(String forecastJsonStr)
+            {
+
+
+
+                Type listType = new TypeToken<ArrayList<Search>>(){}.getType();
+                List<Search> results = new Gson().fromJson(forecastJsonStr, listType);
+
+                return results;
+
+            }
+            @Override
+            protected List<Search> doInBackground(String... params) {
+
+
+
+                HttpURLConnection urlConnection = null;
+                BufferedReader reader = null;
+
+                String forecastJsonStr = null;
+
+                try {
+                    final String BASE_URL = "http://ehab.raqedu.com/search.php?";
+
+                    final String KEY_PARAM = "q";
+
+                    Uri builtUri = Uri.parse(BASE_URL).buildUpon()
+                            .appendQueryParameter(KEY_PARAM, params[0])
+                            .build();
+
+                    URL url = new URL(builtUri.toString());
+
+
+                    // Create the request to Server DB, and open the connection
+                    urlConnection = (HttpURLConnection) url.openConnection();
+                    urlConnection.setRequestMethod("GET");
+                    urlConnection.connect();
+
+                    // Read the input stream into a String
+                    InputStream inputStream = urlConnection.getInputStream();
+                    StringBuffer buffer = new StringBuffer();
+                    if (inputStream == null) {
+                        // Nothing to do.
+                        return null;
+                    }
+                    reader = new BufferedReader(new InputStreamReader(inputStream));
+
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        buffer.append(line + "\n");
+                    }
+
+                    if (buffer.length() == 0) {
+                        // Stream was empty.  No point in parsing.
+                        return null;
+                    }
+                    forecastJsonStr = buffer.toString();
+                    Log.v(LOG_TAG, "Json Strings" + forecastJsonStr);
+                } catch (IOException e) {
+                    Log.e(LOG_TAG, "Error ", e);
+                    // If the code didn't successfully get the weather data, there's no point in attemping
+                    // to parse it.
+                    return null;
+                } finally {
+                    if (urlConnection != null) {
+                        urlConnection.disconnect();
+                    }
+                    if (reader != null) {
+                        try {
+                            reader.close();
+                        } catch (final IOException e) {
+                            Log.e(LOG_TAG, "Error closing stream", e);
+                        }
+                    }
+                }
+
+
+                    return getWeatherDataFromJson(forecastJsonStr);
+
+
+            }
+
+            @Override
+            protected void onPostExecute(List<Search> result) {
+                //super.onPostExecute(strings);
+
+
+
+
+                if (result != null) {
+                    String[] COUNTRIES = new String[result.size()];
+                    for(int i=0; i <result.size();i++)
+                    {
+                        COUNTRIES[i]=result.get(i).getName();
+                    }
+                    adapter = new ArrayAdapter<String>(getContext(),
+                            android.R.layout.select_dialog_item, COUNTRIES);
+
+                    etName.setAdapter(adapter);
+                    // New data is back from the server.  Hooray!
+                }
+
+
+            }
+
+        }
+
+
 }

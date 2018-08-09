@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity{
                 fragmentTransaction.replace(R.id.fragment_container, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+                fab.setVisibility(View.GONE);
 
             }
         });
@@ -95,23 +97,11 @@ public class MainActivity extends AppCompatActivity{
                                     toolbarTitle.setText(R.string.time_line);
                                     FragmentTransaction fragmentTransaction =
                                             getSupportFragmentManager().beginTransaction();
+                                    fragmentTransaction.addToBackStack(null);
                                     fragmentTransaction.replace(R.id.fragment_container, fragment);
                                     fragmentTransaction.commit();
                                     onBackPressed();
-                                    fab.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            fragment = new AddMedsFragment();
-                                            toolbarTitle.setText(R.string.add_medicine);
-                                            FragmentTransaction fragmentTransaction =
-                                                    getSupportFragmentManager().beginTransaction();
-                                            fragmentTransaction.replace(R.id.fragment_container, fragment);
-                                            fragmentTransaction.commit();
-//                                            Snackbar.make(view, "Replace with your own action",
-//                                                    Snackbar.LENGTH_LONG)
-//                                                    .setAction("Action", null).show();
-                                        }
-                                    });
+                                    fab.setVisibility(View.GONE);
                                 }
                                 break;
 
@@ -123,16 +113,11 @@ public class MainActivity extends AppCompatActivity{
                                     toolbarTitle.setText(R.string.add_medicine);
                                     FragmentTransaction fragmentTransaction =
                                             getSupportFragmentManager().beginTransaction();
+                                    fragmentTransaction.addToBackStack(null);
                                     fragmentTransaction.replace(R.id.fragment_container, fragment);
                                     fragmentTransaction.commit();
                                     onBackPressed();
-                                    fab.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            Snackbar.make(view, "Na action", Snackbar.LENGTH_LONG)
-                                                    .setAction("Action", null).show();
-                                        }
-                                    });
+                                    fab.setVisibility(View.GONE);
                                 }
                                 break;
                             case 3:
@@ -160,7 +145,11 @@ public class MainActivity extends AppCompatActivity{
         //handle the back press :D close the drawer first and if the drawer is closed close the activity
         if (result != null && result.isDrawerOpen()) {
             result.closeDrawer();
-        } else {
+        }
+
+        else {
+            if(fab.getVisibility()!=View.VISIBLE)
+                fab.setVisibility(View.VISIBLE);
             super.onBackPressed();
         }
     }
