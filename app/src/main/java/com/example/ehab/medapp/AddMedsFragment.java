@@ -95,7 +95,7 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
     private FirebaseDatabase database;
     private DatabaseReference mDatabase;
     private LocalTime time;
-    ArrayAdapter<String> adapter;
+    ArrayAdapter<String> searchAdapter;
     public AddMedsFragment() {
         // Required empty public constructor
     }
@@ -241,7 +241,7 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
                             }
                         });*/
 
-                new FetchMoiveTask().execute("trilep"+"%");
+
             }
         });
         return view;
@@ -404,10 +404,10 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
                     {
                         COUNTRIES[i]=result.get(i).getName();
                     }
-                    adapter = new ArrayAdapter<String>(getContext(),
+                    searchAdapter = new ArrayAdapter<String>(AddMedsFragment.this.getContext(),
                             android.R.layout.select_dialog_item, COUNTRIES);
-
-                    etName.setAdapter(adapter);
+                    etName.setThreshold(1);
+                    etName.setAdapter(searchAdapter);
                     // New data is back from the server.  Hooray!
                 }
 
