@@ -10,8 +10,10 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -112,11 +114,27 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
          mDatabase = database.getReference();
 
 
+        etName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                new FetchMoiveTask().execute(etName.getText().toString()+"%");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser firebaseUser = mAuth.getCurrentUser();
         names = getResources().getStringArray(R.array.weekday);
-
+        
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.reminder_array, android.R.layout.simple_spinner_item);
@@ -204,7 +222,7 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
             @Override
             public void onClick(View v) {
 
-             /*   if (!validateForm()) {
+                if (!validateForm()) {
                     return;
                 }
                 Drug drug=null;
@@ -230,6 +248,9 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
                         // Write was successful!
                         // ...
                         Toast.makeText(getActivity(), "Drug Add Successfully", Toast.LENGTH_SHORT).show();
+                        getActivity().onBackPressed();
+
+
                     }
                 })
                         .addOnFailureListener(new OnFailureListener() {
@@ -239,7 +260,7 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
                                 // ...
                                 Toast.makeText(getActivity(), "Failed To Add New Drug", Toast.LENGTH_SHORT).show();
                             }
-                        });*/
+                        });
 
 
             }
