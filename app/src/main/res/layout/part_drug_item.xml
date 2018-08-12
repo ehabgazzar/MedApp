@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="60dp"
     android:layout_marginLeft="2dp"
     android:layout_marginTop="16dp">
 
@@ -11,6 +11,8 @@
         android:id="@+id/drug_iv_status"
         android:layout_width="16dp"
         android:layout_height="16dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="20dp"
         android:src="@drawable/blueborderdot"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -19,26 +21,25 @@
         android:id="@+id/drug_tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:text="10 AM"
         app:layout_constraintBottom_toBottomOf="@+id/drug_iv_status"
         app:layout_constraintStart_toEndOf="@+id/drug_iv_status"
         app:layout_constraintTop_toTopOf="@+id/drug_iv_status"
-        app:layout_constraintVertical_bias="0.444" />
+        app:layout_constraintVertical_bias="0.727" />
 
     <TextView
         android:id="@+id/drug_tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="Drug Name xyz "
         app:layout_constraintBottom_toBottomOf="@+id/drug_iv_status"
         app:layout_constraintStart_toEndOf="@+id/drug_tv_time"
-        app:layout_constraintTop_toTopOf="@+id/drug_iv_status" />
+        app:layout_constraintTop_toTopOf="@+id/drug_iv_status"
+        app:layout_constraintVertical_bias="0.727" />
 
 
     <CheckBox
@@ -47,30 +48,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/check"
         android:button="@null"
         app:layout_constraintBottom_toBottomOf="@+id/drug_iv_status"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/drug_tv_name"
         app:layout_constraintTop_toTopOf="@+id/drug_iv_status"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.521" />
 
-    <TextView
-        android:id="@+id/drug_tv_descr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Some Describtions "
-        app:layout_constraintEnd_toEndOf="@+id/drug_tv_name"
-        app:layout_constraintStart_toStartOf="@+id/drug_tv_name"
-        app:layout_constraintTop_toBottomOf="@+id/drug_tv_name" />
 </android.support.constraint.ConstraintLayout>

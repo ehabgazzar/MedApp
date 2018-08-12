@@ -20,6 +20,10 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.example.ehab.medapp.Utils.getDayPart;
+import static com.example.ehab.medapp.fragments.TimelineFragment.firebaseUser;
+import static com.example.ehab.medapp.fragments.TimelineFragment.mDatabase;
+
 public class PartDrugAdapter extends RecyclerView.Adapter<PartDrugAdapter.MyViewHolder> {
 
 
@@ -42,7 +46,7 @@ public class PartDrugAdapter extends RecyclerView.Adapter<PartDrugAdapter.MyView
     public void onBindViewHolder(final MyViewHolder holder,final int position) {
         Drug drug = drugsList.get(position);
         holder.tvName.setText(drug.getName());
-//        holder.tvDescription.setText(drug.getDescription());
+        holder.tvTime.setText(drug.getTime());
         holder.tvName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,11 +72,14 @@ public class PartDrugAdapter extends RecyclerView.Adapter<PartDrugAdapter.MyView
                 if(holder.cbAction.isChecked()) {
                     holder.cbAction.setBackground(mContext.getResources().getDrawable(R.drawable.checked));
                     holder.ivStatus.setImageResource(R.drawable.bluedot);
+                    drugsList.get(position).setTaken(true);
+                    mDatabase.child("usersDrugs").child(firebaseUser.getUid()).child(drugsList.get(position).getDayPart()).child(drugsList.get(position).getId()).setValue(drugsList.get(position));
                 }
                 else {
                     holder.cbAction.setBackground(mContext.getResources().getDrawable(R.drawable.check));
-
+                    drugsList.get(position).setTaken(false);
                     holder.ivStatus.setImageResource(R.drawable.blueborderdot);
+                    mDatabase.child("usersDrugs").child(firebaseUser.getUid()).child(drugsList.get(position).getDayPart()).child(drugsList.get(position).getId()).setValue(drugsList.get(position));
                 }
             }
         });
@@ -92,8 +99,8 @@ public class PartDrugAdapter extends RecyclerView.Adapter<PartDrugAdapter.MyView
         @BindView(R.id.drug_tv_name)
         TextView tvName;
 
-        @BindView(R.id.drug_tv_descr)
-        TextView tvDescription;
+        @BindView(R.id.drug_tv_time)
+        TextView tvTime;
 
         @BindView(R.id.drug_iv_status)
         ImageView ivStatus;

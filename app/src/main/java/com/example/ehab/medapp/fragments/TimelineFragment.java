@@ -57,9 +57,12 @@ public class TimelineFragment extends Fragment  {
     private LinearLayoutManager mLayoutManager;
     private DatabaseReference  userRef;
     private ValueEventListener mPostListener;
-    private FirebaseAuth mAuth;
+    public static FirebaseAuth mAuth;
     private ArrayList<Drug> drugs;
     private ArrayList<DayPart> dayParts;
+    public static FirebaseDatabase database;
+    public static FirebaseUser firebaseUser;
+    public static DatabaseReference mDatabase;
 
     public TimelineFragment() {
         // Required empty public constructor
@@ -118,30 +121,15 @@ public class TimelineFragment extends Fragment  {
 
     void init() {
       dayParts = new ArrayList<>();
-      drugs = new ArrayList<>();
 
-//        for (int i = 1; i < 4; i++) {
-//            if (i % 2 == 0)
-//                drug = new Drug("" + i, "Drug " + i, "1", "10:30 AM", "Short Des Short Des", true);
-//            else
-//                drug = new Drug("" + i, "Drug " + i, "1", "10:30 AM", "Short Des Short Des", false);
-//            drugs.add(drug);
-//        }
-//        DayPart dayPart1 = new DayPart(getResources().getString(R.string.morning), drugs);
-//        DayPart dayPart2 = new DayPart(getResources().getString(R.string.afterNoon), drugs);
-//        DayPart dayPart3 = new DayPart(getResources().getString(R.string.evening), drugs);
-//        DayPart dayPart4 = new DayPart(getResources().getString(R.string.night), drugs);
-//        dayParts.add(dayPart1);
-//        dayParts.add(dayPart2);
-//        dayParts.add(dayPart3);
-//        dayParts.add(dayPart4);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference mDatabase = database.getReference();
+
+        database = FirebaseDatabase.getInstance();
+         mDatabase = database.getReference();
 
 
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+         firebaseUser = mAuth.getCurrentUser();
      //   mDatabase.child("users-drugs").child(firebaseUser.getUid()).child("morning").push().setValue(drugs);
         Query myTopPostsQuery = mDatabase.child("usersDrugs").child(firebaseUser.getUid());
         myTopPostsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -149,12 +137,25 @@ public class TimelineFragment extends Fragment  {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     // TODO: handle the post
-                    String DayPartName=postSnapshot.getKey();
-                    Log.e("Respomnse", postSnapshot.getKey()+ " /dddd");
+                    String DayPartName = null;
+                    if(postSnapshot.getKey().equals("Evening"))
+                        DayPartName=getResources().getString(R.string.evening);
+                    else if(postSnapshot.getKey().equals("Morning"))
+                        DayPartName=getResources().getString(R.string.morning);
+                    else if(postSnapshot.getKey().equals("AfterNoon"))
+                        DayPartName=getResources().getString(R.string.afterNoon);
+                    else if(postSnapshot.getKey().equals("Night"))
+                        DayPartName=getResources().getString(R.string.night);
+                    drugs = new ArrayList<>();
                     DayPart dayPart1=null;
                     for (DataSnapshot dataSnapshot1: postSnapshot.getChildren()) {
-                        drugs.add(dataSnapshot1.getValue(Drug.class));
-                        Log.e("obj res", drugs.get(0).getName() + " /llll");
+
+                        Drug drug= dataSnapshot1.getValue(Drug.class);
+                        drug.setId(dataSnapshot1.getKey());
+                        drug.setDayPart(postSnapshot.getKey());
+                        Log.e("Respomnse", postSnapshot.getKey()+ " /dddd");
+                        drugs.add(drug);
+                        Log.e("obj res", dataSnapshot1.getKey() + " /llll");
                          dayPart1 = new DayPart(DayPartName, drugs);
 
                     }
@@ -169,7 +170,7 @@ public class TimelineFragment extends Fragment  {
             public void onCancelled(DatabaseError databaseError) {
                 // Getting Post failed, log a message
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-                // ...
+
             }
         });
 

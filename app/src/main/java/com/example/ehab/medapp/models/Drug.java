@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Drug {
 
-    String name,dose, time,schedule,reminder;
+    String id, name,dose, time,schedule,reminder ,dayPart;
     boolean taken;
     ArrayList<String> days;
 
@@ -41,6 +41,7 @@ public class Drug {
         this.time = time;
         this.schedule = schedule;
     }
+
 
 
     public boolean isTaken() {
@@ -102,5 +103,19 @@ public class Drug {
         return reminder;
     }
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getDayPart() {
+        return dayPart;
+    }
+
+    public void setDayPart(String dayPart) {
+        this.dayPart = dayPart;
+    }
 }
