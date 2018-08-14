@@ -246,7 +246,7 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
                     @Override
                     public void onSuccess(Void aVoid) {
                         // Write was successful!
-                        // ...
+
                         Toast.makeText(getActivity(), "Drug Add Successfully", Toast.LENGTH_SHORT).show();
                         getActivity().onBackPressed();
 
@@ -257,7 +257,7 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 // Write failed
-                                // ...
+
                                 Toast.makeText(getActivity(), "Failed To Add New Drug", Toast.LENGTH_SHORT).show();
                             }
                         });

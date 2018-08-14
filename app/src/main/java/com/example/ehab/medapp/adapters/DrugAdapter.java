@@ -67,8 +67,7 @@ public class DrugAdapter extends RecyclerView.Adapter<DrugAdapter.MyViewHolder> 
         @BindView(R.id.drug_tv_name)
         TextView tvName;
 
-        @BindView(R.id.drug_tv_descr)
-        TextView tvDescription;
+
 
  
 

@@ -55,8 +55,7 @@ public class TimelineFragment extends Fragment  {
     public final static String LIST_STATE_KEY = "recycler_list_state";
     Parcelable listState;
     private LinearLayoutManager mLayoutManager;
-    private DatabaseReference  userRef;
-    private ValueEventListener mPostListener;
+
     public static FirebaseAuth mAuth;
     private ArrayList<Drug> drugs;
     private ArrayList<DayPart> dayParts;
@@ -123,10 +122,11 @@ public class TimelineFragment extends Fragment  {
       dayParts = new ArrayList<>();
 
 
-
-        database = FirebaseDatabase.getInstance();
-         mDatabase = database.getReference();
-
+      if(mDatabase==null) {
+          database = FirebaseDatabase.getInstance();
+          database.setPersistenceEnabled(true);
+          mDatabase = database.getReference();
+      }
 
         mAuth = FirebaseAuth.getInstance();
          firebaseUser = mAuth.getCurrentUser();
