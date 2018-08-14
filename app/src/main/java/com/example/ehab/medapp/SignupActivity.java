@@ -58,9 +58,17 @@ public class SignupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser()!=null) {
+            Intent intent= new Intent(SignupActivity.this,MainActivity.class);
+            startActivity(intent);
+            finish();
+
+        }
+
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
-        mAuth = FirebaseAuth.getInstance();
+
         progressDialog=new ProgressDialog(this);
         btSignUp.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -2,6 +2,7 @@ package com.example.ehab.medapp.fragments;
 
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -14,7 +15,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.ehab.medapp.MainActivity;
 import com.example.ehab.medapp.R;
+import com.example.ehab.medapp.SignupActivity;
 import com.example.ehab.medapp.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -81,6 +84,9 @@ public class LoginFragment extends Fragment {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("Task", "signInWithEmail:success");
                             FirebaseUser  firebaseUser = mAuth.getCurrentUser();
+                            Intent intent= new Intent(getActivity(),MainActivity.class);
+                            startActivity(intent);
+                            getActivity().finish();
 
 
                         } else {

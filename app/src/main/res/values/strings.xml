@@ -66,6 +66,8 @@
     <string name="login_now">Login Now !</string>
     <string name="or">OR</string>
     <string name="login">Login</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 
 
 </resources>
