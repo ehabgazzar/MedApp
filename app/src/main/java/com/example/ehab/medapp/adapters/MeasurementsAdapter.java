@@ -36,9 +36,10 @@ public class MeasurementsAdapter extends RecyclerView.Adapter<MeasurementsAdapte
     @Override
     public void onBindViewHolder(final MyViewHolder holder,final int position) {
         Measure pressure = measures.get(position);
-        holder.tvComment.setText(pressure.getComment());
+        if(!pressure.getComment().isEmpty())
+            holder.tvComment.setText(pressure.getComment());
         holder.tvDate.setText(pressure.getDate());
-        holder.tvTime.setText(pressure.getType());
+
         holder.tvMeasure.setText(pressure.getMeasure());
 
     }
@@ -55,8 +56,6 @@ public class MeasurementsAdapter extends RecyclerView.Adapter<MeasurementsAdapte
         TextView tvComment;
         @BindView(R.id.tv_pressure_date)
         TextView tvDate;
-        @BindView(R.id.tv_pressure_time)
-        TextView tvTime;
         @BindView(R.id.tv_pressure_measure)
         TextView tvMeasure;
 

@@ -133,15 +133,16 @@ public class AddMeasureFragment extends Fragment  implements DatePickerDialog.On
                 RadioButton radioButton = (RadioButton) view.findViewById(selectedId);
                 String type = null;
              if(rbBlood.isChecked())
-                 measure= new Measure("Blood Pressure",etMeasureValue.getText().toString(),etComment.getText().toString()
-                        ,etDate.getText().toString());
+                 type="Blood Pressure";
              else if(rbWeight.isChecked())
-                measure= new Measure("Weight",etMeasureValue.getText().toString(),etComment.getText().toString()
+                 type="Weight";
+
+             measure= new Measure(etMeasureValue.getText().toString(),etComment.getText().toString()
                         ,etDate.getText().toString());
 
 
 
-                mDatabase.child("usersMeasures").child(firebaseUser.getUid()).push().setValue(measure).addOnSuccessListener(new OnSuccessListener<Void>() {
+                mDatabase.child("usersMeasures").child(firebaseUser.getUid()).child(type).push().setValue(measure).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(getActivity(), "Measure Added Successfully", Toast.LENGTH_SHORT).show();

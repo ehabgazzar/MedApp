@@ -41,12 +41,12 @@ public class PressureFragment extends Fragment {
         ButterKnife.bind(this,view);
         ArrayList<Measure> drugs= new ArrayList<>();
         Measure drug;
-        for(int i = 1 ; i <5;i++)
-        {
-            drug= new Measure("25/8/2018",i+":30 PM ","120 / 80","Any comment Any comment Any comment");
-            drugs.add(drug);
-
-        }
+//        for(int i = 1 ; i <5;i++)
+//        {
+//            drug= new Measure("25/8/2018",i+":30 PM ","120 / 80","Any comment Any comment Any comment");
+//            drugs.add(drug);
+//
+//        }
 
         event_list_parent_adapter = new MeasurementsAdapter(drugs,getActivity());
 
