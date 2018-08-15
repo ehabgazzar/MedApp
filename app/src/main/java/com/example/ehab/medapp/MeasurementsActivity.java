@@ -35,41 +35,44 @@ public class MeasurementsActivity extends AppCompatActivity {
     ViewPager viewPager;
     @BindView(R.id.fab_m)
     FloatingActionButton fab;
+    AddMeasureFragment fragment=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_measurements);
 
-        ButterKnife.bind(this);
-        toolbar.setTitle(R.string.measurements);
-        setSupportActionBar(toolbar);
+        if(fragment==null) {
+            ButterKnife.bind(this);
+            toolbar.setTitle(R.string.measurements);
+            setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                finish();
-            }
-        });
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                }
+            });
 
 
-        setupViewPager(viewPager);
-        tabLayout.setupWithViewPager(viewPager);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AddMeasureFragment fragment = new AddMeasureFragment();
+            setupViewPager(viewPager);
+            tabLayout.setupWithViewPager(viewPager);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    fragment = new AddMeasureFragment();
 
-                FragmentTransaction fragmentTransaction =
-                        getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, fragment);
-                fragmentTransaction.commit();
-                fab.setVisibility(View.GONE);
-                viewPager.setVisibility(View.GONE);
-                tabLayout.setVisibility(View.GONE);
+                    FragmentTransaction fragmentTransaction =
+                            getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container, fragment);
+                    fragmentTransaction.commit();
+                    fab.setVisibility(View.GONE);
+                    viewPager.setVisibility(View.GONE);
+                    tabLayout.setVisibility(View.GONE);
 
-            }
-        });
+                }
+            });
+        }
     }
 
     private void setupViewPager(ViewPager viewPager) {

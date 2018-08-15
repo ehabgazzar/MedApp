@@ -19,11 +19,12 @@ public class MeasurementsAdapter extends RecyclerView.Adapter<MeasurementsAdapte
 
 
     private ArrayList<Measure> measures;
-
+    private String adapterType;
     private Context mContext;
-    public MeasurementsAdapter(ArrayList<Measure> measures, Context context) {
+    public MeasurementsAdapter(ArrayList<Measure> measures, Context context,String adapterType) {
         this.measures = measures;
         mContext=context;
+        this.adapterType=adapterType;
     }
 
     @Override
@@ -40,7 +41,7 @@ public class MeasurementsAdapter extends RecyclerView.Adapter<MeasurementsAdapte
             holder.tvComment.setText(pressure.getComment());
         holder.tvDate.setText(pressure.getDate());
 
-        holder.tvMeasure.setText(pressure.getMeasure());
+        holder.tvMeasure.setText(pressure.getMeasure()+" "+adapterType);
 
     }
 

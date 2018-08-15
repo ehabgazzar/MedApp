@@ -3,7 +3,10 @@ package com.example.ehab.medapp.models;
 public class Measure {
     String date,measure,comment;
 
-    public Measure( String measure, String comment,String date) {
+    public Measure() {
+    }
+
+    public Measure(String measure, String comment, String date) {
         this.date = date;
 
         this.measure = measure;

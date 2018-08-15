@@ -104,15 +104,8 @@ public class MedsFragment extends Fragment {
 
 
                 }
+                event_list_parent_adapter.addItem(drugs);
 
-                event_list_parent_adapter = new DrugAdapter(drugs,getActivity());
-
-                 mLayoutManager = new LinearLayoutManager(getActivity());
-                drugRecycler.setLayoutManager(mLayoutManager);
-                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(drugRecycler.getContext(), mLayoutManager.getOrientation());
-                drugRecycler.addItemDecoration(dividerItemDecoration);
-                drugRecycler.setItemAnimator(new DefaultItemAnimator());
-                drugRecycler.setAdapter(event_list_parent_adapter);
 
             }
 
@@ -123,6 +116,14 @@ public class MedsFragment extends Fragment {
 
             }
         });
+        event_list_parent_adapter = new DrugAdapter(new ArrayList<Drug>(),getActivity());
+
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        drugRecycler.setLayoutManager(mLayoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(drugRecycler.getContext(), mLayoutManager.getOrientation());
+        drugRecycler.addItemDecoration(dividerItemDecoration);
+        drugRecycler.setItemAnimator(new DefaultItemAnimator());
+        drugRecycler.setAdapter(event_list_parent_adapter);
 
         return view;
     }

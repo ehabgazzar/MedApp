@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ehab.medapp.R;
+import com.example.ehab.medapp.models.DayPart;
 import com.example.ehab.medapp.models.Drug;
 
 import java.util.ArrayList;
@@ -38,6 +39,16 @@ public class DrugAdapter extends RecyclerView.Adapter<DrugAdapter.MyViewHolder> 
         return new MyViewHolder(itemView);
     }
 
+    public void clear() {
+
+        drugsList.clear();
+
+        notifyDataSetChanged();
+    }
+    public void addItem(ArrayList<Drug> dayParts){
+        clear();
+        this.drugsList=dayParts;
+    }
     @Override
     public void onBindViewHolder(final MyViewHolder holder,final int position) {
         Drug drug = drugsList.get(position);

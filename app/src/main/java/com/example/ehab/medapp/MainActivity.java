@@ -46,7 +46,9 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        if (savedInstanceState != null) {
+            return;
+        }
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
