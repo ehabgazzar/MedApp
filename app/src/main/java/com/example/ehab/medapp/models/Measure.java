@@ -1,11 +1,11 @@
 package com.example.ehab.medapp.models;
 
 public class Measure {
-    String date,time,measure,comment;
+    String date, type,measure,comment;
 
-    public Measure(String date, String time, String measure, String comment) {
+    public Measure( String type, String measure, String comment,String date) {
         this.date = date;
-        this.time = time;
+        this.type = type;
         this.measure = measure;
         this.comment = comment;
     }
@@ -14,8 +14,8 @@ public class Measure {
         return date;
     }
 
-    public String getTime() {
-        return time;
+    public String getType() {
+        return type;
     }
 
     public String getMeasure() {

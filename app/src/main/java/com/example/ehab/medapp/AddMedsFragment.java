@@ -144,7 +144,7 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
         spinner.setAdapter(adapter);
         Toast.makeText(getActivity(), "" + spinner.getSelectedItem(), Toast.LENGTH_SHORT).show();
         timeTake.setInputType(InputType.TYPE_NULL);
-        timeTake.requestFocus();
+//        timeTake.requestFocus();
 
         timeTake.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,8 +171,7 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
                     );
                 }
 
-//                tpd.setMinTime(DateCal.get(Calendar.HOUR_OF_DAY),DateCal.get(Calendar.MINUTE),
-//                        DateCal.get(Calendar.SECOND));
+
 
                 tpd.setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
@@ -284,7 +283,7 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
 
 
         timeTake.setText(sdf.format(DateCal.getTime()));
-    //    time=sdf.format(DateCal.getTime());
+    //    time=sdf.format(DateCal.getType());
 
     }
 

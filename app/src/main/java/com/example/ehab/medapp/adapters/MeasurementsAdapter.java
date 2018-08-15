@@ -38,7 +38,7 @@ public class MeasurementsAdapter extends RecyclerView.Adapter<MeasurementsAdapte
         Measure pressure = measures.get(position);
         holder.tvComment.setText(pressure.getComment());
         holder.tvDate.setText(pressure.getDate());
-        holder.tvTime.setText(pressure.getTime());
+        holder.tvTime.setText(pressure.getType());
         holder.tvMeasure.setText(pressure.getMeasure());
 
     }

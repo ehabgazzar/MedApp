@@ -10,7 +10,7 @@
     <string name="mediciton_name">Medicine Name</string>
     <string name="reminder_times">Reminder Times</string>
     <string name="search_here">Search Here</string>
-    <string name="pick_a_time">pick a time</string>
+    <string name="pick_a_time">pick a type</string>
     <string name="enter">enter</string>
     <string name="dose">Dose</string>
     <string name="every_day">Every Day</string>
@@ -30,6 +30,7 @@
     <string name="enter_name">Enter Name</string>
     <string name="sign_up">Sign Up</string>
     <string name="enter_age">Enter Age</string>
+    <string name="err_enter_measure_type">Please Choose Measure Type</string>
 
 
     <string-array name="reminder_array">
