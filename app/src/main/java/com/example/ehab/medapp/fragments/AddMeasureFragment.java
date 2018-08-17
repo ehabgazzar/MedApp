@@ -60,12 +60,18 @@ public class AddMeasureFragment extends Fragment  implements DatePickerDialog.On
     private DatabaseReference mDatabase;
     private Measure measure;
 
+    public static String Fragment_key=null;
     public AddMeasureFragment() {
         // Required empty public constructor
     }
 
 
+    public void onSaveInstanceState(Bundle state) {
+        super.onSaveInstanceState(state);
+        // Save  state
+        Fragment_key="AddMeasure";
 
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

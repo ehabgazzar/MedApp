@@ -46,9 +46,7 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        if (savedInstanceState != null) {
-            return;
-        }
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,6 +135,9 @@ public class MainActivity extends AppCompatActivity{
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
             fragmentTransaction.commit();
+        }
+        else {
+            fab.setVisibility(View.GONE);
         }
     }
 

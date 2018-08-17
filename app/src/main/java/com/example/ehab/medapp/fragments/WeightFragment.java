@@ -65,15 +65,17 @@ public class WeightFragment extends Fragment {
                     weight = dataSnapshot1.getValue(Measure.class);
                     weights.add(weight);
                 }
-                event_list_parent_adapter = new MeasurementsAdapter(weights,getActivity(),"KG");
+                if(weights.size()>0) {
+                    event_list_parent_adapter = new MeasurementsAdapter(weights, getActivity(), "KG");
 
-                LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                drugRecycler.setLayoutManager(mLayoutManager);
-                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(drugRecycler.getContext(), mLayoutManager.getOrientation());
-                drugRecycler.addItemDecoration(dividerItemDecoration);
-                drugRecycler.setItemAnimator(new DefaultItemAnimator());
-                drugRecycler.setAdapter(event_list_parent_adapter);
-                initLineView(lineView);
+                    LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                    drugRecycler.setLayoutManager(mLayoutManager);
+                    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(drugRecycler.getContext(), mLayoutManager.getOrientation());
+                    drugRecycler.addItemDecoration(dividerItemDecoration);
+                    drugRecycler.setItemAnimator(new DefaultItemAnimator());
+                    drugRecycler.setAdapter(event_list_parent_adapter);
+                    initLineView(lineView);
+                }
             }
 
             @Override

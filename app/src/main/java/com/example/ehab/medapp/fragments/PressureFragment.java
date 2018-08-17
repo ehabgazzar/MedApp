@@ -2,7 +2,9 @@ package com.example.ehab.medapp.fragments;
 
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.example.ehab.medapp.fragments.TimelineFragment.LIST_STATE_KEY;
 import static com.example.ehab.medapp.fragments.TimelineFragment.firebaseUser;
 import static com.example.ehab.medapp.fragments.TimelineFragment.mDatabase;
 
@@ -37,10 +40,13 @@ public class PressureFragment extends Fragment {
     MeasurementsAdapter event_list_parent_adapter;
     Measure measure;
     private ArrayList<Measure> measures;
+    private LinearLayoutManager mLayoutManager;
 
     public PressureFragment() {
         // Required empty public constructor
     }
+
+
 
 
     @Override
@@ -62,7 +68,7 @@ public class PressureFragment extends Fragment {
                 }
                 event_list_parent_adapter = new MeasurementsAdapter(measures,getActivity(),"mmHg");
 
-                LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                 mLayoutManager = new LinearLayoutManager(getActivity());
                 drugRecycler.setLayoutManager(mLayoutManager);
                 DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(drugRecycler.getContext(), mLayoutManager.getOrientation());
                 drugRecycler.addItemDecoration(dividerItemDecoration);
@@ -76,12 +82,6 @@ public class PressureFragment extends Fragment {
 
             }
         });
-//        for(int i = 1 ; i <5;i++)
-//        {
-//            measure= new Measure("25/8/2018",i+":30 PM ","120 / 80","Any comment Any comment Any comment");
-//            measures.add(measure);
-//
-//        }
 
 
         return view;
