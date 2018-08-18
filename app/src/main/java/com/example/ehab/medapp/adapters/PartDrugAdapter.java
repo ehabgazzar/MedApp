@@ -68,7 +68,7 @@ public class PartDrugAdapter extends RecyclerView.Adapter<PartDrugAdapter.MyView
         holder.cbAction.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Toast.makeText(mContext, ""+position, Toast.LENGTH_SHORT).show();
+
                 if(holder.cbAction.isChecked()) {
                     holder.cbAction.setBackground(mContext.getResources().getDrawable(R.drawable.checked));
                     holder.ivStatus.setImageResource(R.drawable.bluedot);
