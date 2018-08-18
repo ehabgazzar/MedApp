@@ -62,7 +62,7 @@ public class TimelineFragment extends Fragment  {
     public static FirebaseDatabase database;
     public static FirebaseUser firebaseUser;
     public static DatabaseReference mDatabase;
-
+    static int currentVisiblePosition = 0;
     public TimelineFragment() {
         // Required empty public constructor
     }
@@ -70,30 +70,23 @@ public class TimelineFragment extends Fragment  {
 
     public void onSaveInstanceState(Bundle state) {
         super.onSaveInstanceState(state);
+
         // Save list state
         listState = mLayoutManager.onSaveInstanceState();
         state.putParcelable(LIST_STATE_KEY, listState);
-
     }
-
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         // Retrieve list state and list/item positions
         if (savedInstanceState != null) {
 
             listState = savedInstanceState.getParcelable(LIST_STATE_KEY);
 
         }
+}
 
-    }
 
     @Override
     public void onResume() {
@@ -102,6 +95,9 @@ public class TimelineFragment extends Fragment  {
             mLayoutManager.onRestoreInstanceState(listState);
 
         }
+
+//        ((LinearLayoutManager) event_recycler_view_parent.getLayoutManager()).scrollToPosition(currentVisiblePosition);
+//        currentVisiblePosition = 0;
     }
 
 

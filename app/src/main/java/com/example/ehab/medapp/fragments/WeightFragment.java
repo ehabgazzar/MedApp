@@ -3,7 +3,9 @@ package com.example.ehab.medapp.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -28,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import im.dacer.androidcharts.LineView;
 
+import static com.example.ehab.medapp.fragments.TimelineFragment.LIST_STATE_KEY;
 import static com.example.ehab.medapp.fragments.TimelineFragment.firebaseUser;
 import static com.example.ehab.medapp.fragments.TimelineFragment.mDatabase;
 
@@ -42,8 +45,39 @@ public class WeightFragment extends Fragment {
     MeasurementsAdapter event_list_parent_adapter;
     ArrayList<Measure> weights;
     Measure weight;
+    private Parcelable listState;
+    private LinearLayoutManager mLayoutManager;
+
     public WeightFragment() {
         // Required empty public constructor
+    }
+    public void onSaveInstanceState(Bundle state) {
+        super.onSaveInstanceState(state);
+        // Save list state
+        listState = mLayoutManager.onSaveInstanceState();
+        state.putParcelable(LIST_STATE_KEY, listState);
+
+    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        // Retrieve list state and list/item positions
+        if (savedInstanceState != null) {
+
+            listState = savedInstanceState.getParcelable(LIST_STATE_KEY);
+
+        }
+
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (listState != null) {
+            mLayoutManager.onRestoreInstanceState(listState);
+
+        }
     }
 
 
@@ -68,7 +102,7 @@ public class WeightFragment extends Fragment {
                 if(weights.size()>0) {
                     event_list_parent_adapter = new MeasurementsAdapter(weights, getActivity(), "KG");
 
-                    LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                     mLayoutManager = new LinearLayoutManager(getActivity());
                     drugRecycler.setLayoutManager(mLayoutManager);
                     DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(drugRecycler.getContext(), mLayoutManager.getOrientation());
                     drugRecycler.addItemDecoration(dividerItemDecoration);

@@ -41,12 +41,41 @@ public class PressureFragment extends Fragment {
     Measure measure;
     private ArrayList<Measure> measures;
     private LinearLayoutManager mLayoutManager;
+    private Parcelable listState;
 
     public PressureFragment() {
         // Required empty public constructor
     }
 
 
+    public void onSaveInstanceState(Bundle state) {
+        super.onSaveInstanceState(state);
+        // Save list state
+        listState = mLayoutManager.onSaveInstanceState();
+        state.putParcelable(LIST_STATE_KEY, listState);
+
+    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        // Retrieve list state and list/item positions
+        if (savedInstanceState != null) {
+
+            listState = savedInstanceState.getParcelable(LIST_STATE_KEY);
+
+        }
+
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (listState != null) {
+            mLayoutManager.onRestoreInstanceState(listState);
+
+        }
+    }
 
 
     @Override

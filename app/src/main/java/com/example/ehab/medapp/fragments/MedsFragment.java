@@ -69,7 +69,7 @@ public class MedsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (listState != null) {
-//            init();
+
             mLayoutManager.onRestoreInstanceState(listState);
 
         }

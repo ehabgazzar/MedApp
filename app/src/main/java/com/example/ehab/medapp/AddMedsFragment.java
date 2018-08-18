@@ -1,7 +1,11 @@
 package com.example.ehab.medapp;
 
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -98,6 +102,8 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
     private DatabaseReference mDatabase;
     private LocalTime time;
     ArrayAdapter<String> searchAdapter;
+    private PendingIntent pendingIntent;
+
     public AddMedsFragment() {
         // Required empty public constructor
     }
@@ -107,6 +113,9 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Intent alarmIntent = new Intent(getActivity(), AlarmReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, 0);
+
         final View view=inflater.inflate(R.layout.fragment_add_meds, container, false);
 
         ButterKnife.bind(this,view);
@@ -155,8 +164,8 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
 
                     tpd = com.wdullaer.materialdatetimepicker.time.TimePickerDialog.newInstance(
                             AddMedsFragment.this,
-                            DateCal.get(Calendar.HOUR_OF_DAY),
-                            DateCal.get(Calendar.MINUTE),
+                            timeCal.get(Calendar.HOUR_OF_DAY),
+                            timeCal.get(Calendar.MINUTE),
                             false
                     );
 
@@ -164,9 +173,9 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
                 } else {
                     tpd.initialize(
                             AddMedsFragment.this,
-                            DateCal.get(Calendar.HOUR_OF_DAY),
-                            DateCal.get(Calendar.MINUTE),
-                            DateCal.get(Calendar.SECOND),
+                            timeCal.get(Calendar.HOUR_OF_DAY),
+                            timeCal.get(Calendar.MINUTE),
+                            timeCal.get(Calendar.SECOND),
                             false
                     );
                 }
@@ -247,6 +256,7 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
                         // Write was successful!
 
                         Toast.makeText(getActivity(), "Drug Add Successfully", Toast.LENGTH_SHORT).show();
+                        scheduleAlarm(timeCal);
                         getActivity().onBackPressed();
 
 
@@ -272,18 +282,18 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
         super.onResume();
 
     }
-    Calendar DateCal = Calendar.getInstance();
+    Calendar timeCal = Calendar.getInstance();
     @Override
     public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
-        DateCal.set(Calendar.HOUR_OF_DAY, hourOfDay);
-        DateCal.set(Calendar.MINUTE, minute);
+        timeCal.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        timeCal.set(Calendar.MINUTE, minute);
         time = new LocalTime(hourOfDay, minute, second);
         String myFormat = "hh:mm a";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
 
-        timeTake.setText(sdf.format(DateCal.getTime()));
-    //    time=sdf.format(DateCal.getType());
+        timeTake.setText(sdf.format(timeCal.getTime()));
+    //    sTime=sdf.format(timeCal.getType());
 
     }
 
@@ -436,5 +446,20 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
 
         }
 
+    public void scheduleAlarm(Calendar calendar1) {
+        AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        int interval = 1000 * 60 * 60*23;
 
+
+        /* Set the alarm to start at 10:30 AM */
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, calendar1.get(Calendar.HOUR_OF_DAY));
+        calendar.set(Calendar.MINUTE, calendar1.get(Calendar.MINUTE));
+        Log.e("Time",calendar.getTime().toString());
+        Log.e("Time",calendar1.getTime().toString());
+        /* Repeating on every 20 minutes interval */
+        manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                interval, pendingIntent);
+    }
 }

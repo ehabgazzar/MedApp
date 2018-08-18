@@ -16,6 +16,7 @@ import com.example.ehab.medapp.fragments.MedsFragment;
 import com.example.ehab.medapp.fragments.PressureFragment;
 import com.example.ehab.medapp.fragments.TimelineFragment;
 import com.example.ehab.medapp.fragments.WeightFragment;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity{
     private Drawer result;
 
     private Fragment fragment;
-
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,14 +75,14 @@ public class MainActivity extends AppCompatActivity{
         PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.time_line);
         PrimaryDrawerItem item2 = new PrimaryDrawerItem().withIdentifier(2).withName(R.string.medicines);
         PrimaryDrawerItem item3 = new PrimaryDrawerItem().withIdentifier(3).withName(R.string.measurements);
-        PrimaryDrawerItem item4 = new PrimaryDrawerItem().withIdentifier(4).withName(R.string.settings);
+
 
         result = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withAccountHeader(headerResult)
                 .addDrawerItems(
-                        item1, item2,item3, new DividerDrawerItem(),item4
+                        item1, item2,item3, new DividerDrawerItem()
 
                 ) .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
