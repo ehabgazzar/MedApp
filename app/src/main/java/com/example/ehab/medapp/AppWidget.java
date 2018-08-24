@@ -3,9 +3,11 @@ package com.example.ehab.medapp;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import org.joda.time.LocalTime;
@@ -18,6 +20,32 @@ import static com.example.ehab.medapp.Utils.getDayPart;
 public class AppWidget extends AppWidgetProvider {
 
 
+    public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                       int [] appWidgetId) {
+        Log.d("AppWidgetProvider","Called");
+
+        // Construct the RemoteViews object
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.app_widget);
+
+
+        // Instruct the widget manager to update the widget
+//        appWidgetManager.updateAppWidget(appWidgetId, views);
+        appWidgetManager.getInstance(context).updateAppWidget(
+                new ComponentName(context, AppWidget.class), views);
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+        int[] appWidgetIds;
+        if (intent.getAction().equals("android.appwidget.action.APPWIDGET_UPDATE")) {
+            appWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);
+            updateAppWidget(context, mgr, appWidgetIds);
+
+        }
+
+        super.onReceive(context, intent);
+    }
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them

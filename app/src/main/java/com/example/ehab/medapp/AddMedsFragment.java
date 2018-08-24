@@ -2,7 +2,10 @@ package com.example.ehab.medapp;
 
 
 import android.app.AlarmManager;
+
 import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -257,6 +260,15 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
 
                         Toast.makeText(getActivity(), "Drug Add Successfully", Toast.LENGTH_SHORT).show();
                         scheduleAlarm(timeCal);
+
+                        Intent intent = new Intent(getActivity(), AppWidget.class);
+                        intent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
+                        int ids[] = AppWidgetManager.getInstance(getActivity().getApplication()).getAppWidgetIds(new ComponentName(
+                                getActivity().getApplication(), AppWidget.class));
+                        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
+                        getActivity().sendBroadcast(intent);
+                        AppWidgetManager mgr = AppWidgetManager.getInstance(getContext());
+                        AppWidget.updateAppWidget(getActivity(),mgr,ids);
                         getActivity().onBackPressed();
 
 
