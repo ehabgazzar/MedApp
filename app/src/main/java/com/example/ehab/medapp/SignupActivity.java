@@ -110,6 +110,7 @@ public class SignupActivity extends AppCompatActivity {
                             Log.d("Task", "createUserWithEmail:success");
                             FirebaseUser firebaseUser = mAuth.getCurrentUser();
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
+
                             DatabaseReference mDatabase = database.getReference();
 
 

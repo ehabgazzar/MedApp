@@ -153,7 +153,7 @@ public class AddMeasureFragment extends Fragment  implements DatePickerDialog.On
                 mDatabase.child("usersMeasures").child(firebaseUser.getUid()).child(type).push().setValue(measure).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(getActivity(), R.string.add_meas_msg, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.add_meas_msg, Toast.LENGTH_SHORT).show();
                       //  getActivity().onBackPressed();
 
 
@@ -161,7 +161,7 @@ public class AddMeasureFragment extends Fragment  implements DatePickerDialog.On
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(), R.string.add_meas_err, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.add_meas_err, Toast.LENGTH_SHORT).show();
                     }
                 });
 

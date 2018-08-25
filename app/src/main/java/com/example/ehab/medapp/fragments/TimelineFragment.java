@@ -131,7 +131,6 @@ public class TimelineFragment extends Fragment  {
 
         if(mDatabase==null) {
             database = FirebaseDatabase.getInstance();
-            database.setPersistenceEnabled(true);
             mDatabase = database.getReference();
         }
         mAuth = FirebaseAuth.getInstance();

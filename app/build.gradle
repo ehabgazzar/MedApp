@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'key0'
             keyPassword '123456789'
-            storeFile file('C:/Users/eh/AndroidStudioProjects/MedApp/app/src/main/res/key.jks')
+            storeFile file('src/main/res/key.jks')
             storePassword '123456'
         }
     }
