@@ -125,7 +125,7 @@ public class SignupActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("task", "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(SignupActivity.this, "Authentication failed."+task.getException().getLocalizedMessage(),
+                            Toast.makeText(SignupActivity.this, R.string.err_enter_auth,
                                     Toast.LENGTH_SHORT).show();
 
                         }

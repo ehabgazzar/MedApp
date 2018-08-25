@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ehab.medapp.AddMedsFragment;
@@ -59,7 +61,7 @@ public class AddMeasureFragment extends Fragment  implements DatePickerDialog.On
     private FirebaseDatabase database;
     private DatabaseReference mDatabase;
     private Measure measure;
-
+    FloatingActionButton fab;
     public static String Fragment_key=null;
     public AddMeasureFragment() {
         // Required empty public constructor
@@ -151,7 +153,7 @@ public class AddMeasureFragment extends Fragment  implements DatePickerDialog.On
                 mDatabase.child("usersMeasures").child(firebaseUser.getUid()).child(type).push().setValue(measure).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(getActivity(), "Measure Added Successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.add_meas_msg, Toast.LENGTH_SHORT).show();
                       //  getActivity().onBackPressed();
 
 
@@ -159,7 +161,7 @@ public class AddMeasureFragment extends Fragment  implements DatePickerDialog.On
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(), "Failed To Add New Measure", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.add_meas_err, Toast.LENGTH_SHORT).show();
                     }
                 });
 

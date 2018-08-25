@@ -14,13 +14,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 import com.example.ehab.medapp.R;
 import com.example.ehab.medapp.adapters.MeasurementsAdapter;
 import com.example.ehab.medapp.models.Measure;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
@@ -30,9 +35,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import im.dacer.androidcharts.LineView;
 
-import static com.example.ehab.medapp.fragments.TimelineFragment.LIST_STATE_KEY;
-import static com.example.ehab.medapp.fragments.TimelineFragment.firebaseUser;
-import static com.example.ehab.medapp.fragments.TimelineFragment.mDatabase;
 
 
 /**
@@ -47,6 +49,12 @@ public class WeightFragment extends Fragment {
     Measure weight;
     private Parcelable listState;
     private LinearLayoutManager mLayoutManager;
+    private final  String LIST_STATE_KEY = "recycler_list_state";
+    private FirebaseDatabase database;
+    private FirebaseUser firebaseUser;
+    private DatabaseReference mDatabase;
+    TextView toolbarTitle;
+    private FirebaseAuth mAuth;
 
     public WeightFragment() {
         // Required empty public constructor
@@ -71,14 +79,7 @@ public class WeightFragment extends Fragment {
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (listState != null) {
-            mLayoutManager.onRestoreInstanceState(listState);
 
-        }
-    }
 
 
     @Override
@@ -90,6 +91,13 @@ public class WeightFragment extends Fragment {
 
         ButterKnife.bind(this,view);
         weights  = new ArrayList<>();
+        if(mDatabase==null) {
+            database = FirebaseDatabase.getInstance();
+
+            mDatabase = database.getReference();
+        }
+        mAuth = FirebaseAuth.getInstance();
+        firebaseUser = mAuth.getCurrentUser();
 
         Query myTopPostsQuery = mDatabase.child("usersMeasures").child(firebaseUser.getUid()).child("Weight");
         myTopPostsQuery.addListenerForSingleValueEvent(new ValueEventListener() {

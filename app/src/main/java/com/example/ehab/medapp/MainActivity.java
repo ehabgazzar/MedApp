@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity{
                 fragmentTransaction.replace(R.id.fragment_container, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
-                fab.setVisibility(View.GONE);
+
 
             }
         });
@@ -68,10 +68,8 @@ public class MainActivity extends AppCompatActivity{
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.side_nav_bar)
                 .addProfiles(
-                        new ProfileDrawerItem().withName("Name" + " " +"last name").withEmail("email")
-                                .withIcon(R.mipmap.ic_launcher)
-                ).withSelectionListEnabledForSingleProfile(false)
-                .build();
+                        new ProfileDrawerItem().withIcon(R.mipmap.ic_launcher)
+                ).withSelectionListEnabledForSingleProfile(false).build();
         PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.time_line);
         PrimaryDrawerItem item2 = new PrimaryDrawerItem().withIdentifier(2).withName(R.string.medicines);
         PrimaryDrawerItem item3 = new PrimaryDrawerItem().withIdentifier(3).withName(R.string.measurements);
@@ -81,6 +79,7 @@ public class MainActivity extends AppCompatActivity{
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withAccountHeader(headerResult)
+                .withSavedInstance(savedInstanceState)
                 .addDrawerItems(
                         item1, item2,item3, new DividerDrawerItem()
 
@@ -95,14 +94,13 @@ public class MainActivity extends AppCompatActivity{
                                 fragment = new TimelineFragment();
                                 if (fragment != null) {
 
-                                    toolbarTitle.setText(R.string.time_line);
                                     FragmentTransaction fragmentTransaction =
                                             getSupportFragmentManager().beginTransaction();
                                     fragmentTransaction.addToBackStack(null);
                                     fragmentTransaction.replace(R.id.fragment_container, fragment);
                                     fragmentTransaction.commit();
                                     onBackPressed();
-                                    fab.setVisibility(View.GONE);
+
                                 }
                                 break;
 
@@ -111,14 +109,14 @@ public class MainActivity extends AppCompatActivity{
                                 fragment = new MedsFragment();
                                 if (fragment != null) {
 
-                                    toolbarTitle.setText(R.string.add_medicine);
+
                                     FragmentTransaction fragmentTransaction =
                                             getSupportFragmentManager().beginTransaction();
                                     fragmentTransaction.addToBackStack(null);
                                     fragmentTransaction.replace(R.id.fragment_container, fragment);
                                     fragmentTransaction.commit();
                                     onBackPressed();
-                                    fab.setVisibility(View.GONE);
+
                                 }
                                 break;
                             case 3:
@@ -130,18 +128,21 @@ public class MainActivity extends AppCompatActivity{
                         return false;
                     }
                 }).build();
-        if(savedInstanceState==null && fragment==null) {
+        if(savedInstanceState==null) {
             fragment = new TimelineFragment();
             FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
             fragmentTransaction.commit();
-        }
-        else {
-            fab.setVisibility(View.GONE);
+
         }
     }
-
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        //add the values which need to be saved from the drawer to the bundle
+        outState = result.saveInstanceState(outState);
+        super.onSaveInstanceState(outState);
+    }
 
 
     @Override

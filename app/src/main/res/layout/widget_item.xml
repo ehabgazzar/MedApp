@@ -22,7 +22,6 @@
         android:layout_weight="0.8"
         android:gravity="center"
         android:textColor="@color/black"
-        android:text="TextView"
-        android:textSize="18sp" />
+       android:textSize="18sp" />
 
 </LinearLayout>

@@ -40,6 +40,7 @@
         android:layout_margin="16dp"
         app:layout_anchor="@+id/viewpager"
         app:layout_anchorGravity="bottom|right"
+        android:contentDescription="@string/fab_meas"
         app:srcCompat="@android:drawable/ic_input_add" />
 
     <FrameLayout

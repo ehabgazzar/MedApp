@@ -92,7 +92,7 @@ public class LoginFragment extends Fragment {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("Task", "signInWithEmail:failure", task.getException());
-                            Toast.makeText(getActivity(), "Authentication failed."+ task.getException().getLocalizedMessage(),
+                            Toast.makeText(getActivity(), R.string.err_enter_auth,
                                     Toast.LENGTH_SHORT).show();
 
 

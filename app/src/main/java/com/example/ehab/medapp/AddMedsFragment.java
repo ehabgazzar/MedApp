@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -32,6 +33,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ehab.medapp.adapters.DaysAdapter;
@@ -94,6 +96,7 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
     @BindView(R.id.rb_meds_everyd)
     RadioButton rbEDay;
 
+    TextView toolbarTitle;
     @BindView(R.id.bt_meds_add)
     Button Add;
     private TimePickerDialog tpd;
@@ -106,6 +109,7 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
     private LocalTime time;
     ArrayAdapter<String> searchAdapter;
     private PendingIntent pendingIntent;
+    private FloatingActionButton fab;
 
     public AddMedsFragment() {
         // Required empty public constructor
@@ -121,7 +125,12 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
 
         final View view=inflater.inflate(R.layout.fragment_add_meds, container, false);
 
+        toolbarTitle=getActivity().findViewById(R.id.toolbar_title);
+        toolbarTitle.setText(R.string.add_medicine);
+
         ButterKnife.bind(this,view);
+        fab=getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.GONE);
          database = FirebaseDatabase.getInstance();
          mDatabase = database.getReference();
 
@@ -154,9 +163,8 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
-        Toast.makeText(getActivity(), "" + spinner.getSelectedItem(), Toast.LENGTH_SHORT).show();
         timeTake.setInputType(InputType.TYPE_NULL);
-//        timeTake.requestFocus();
+
 
         timeTake.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,7 +217,7 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
                         new DaysAdapter(getActivity(), names, new ClickListener() {
                             @Override
                             public void onPositionClicked(int position) {
-                                Toast.makeText(getActivity(), ""+position, Toast.LENGTH_SHORT).show();
+
                             }
                         });
                 RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2,GridLayoutManager.HORIZONTAL, false);
@@ -246,7 +254,7 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
                  }
                  else
                  {
-                     Toast.makeText(getActivity(), "select Day", Toast.LENGTH_SHORT).show();
+                     Toast.makeText(getActivity(), R.string.enter_day, Toast.LENGTH_SHORT).show();
                  }
                 }
                 else {
@@ -258,7 +266,7 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
                     public void onSuccess(Void aVoid) {
                         // Write was successful!
 
-                        Toast.makeText(getActivity(), "Drug Add Successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.add_msg_drug, Toast.LENGTH_SHORT).show();
                         scheduleAlarm(timeCal);
 
                         Intent intent = new Intent(getActivity(), AppWidget.class);
@@ -270,6 +278,8 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
                         AppWidgetManager mgr = AppWidgetManager.getInstance(getContext());
                         AppWidget.updateAppWidget(getActivity(),mgr,ids);
                         getActivity().onBackPressed();
+                        toolbarTitle.setText(R.string.time_line);
+
 
 
                     }
@@ -279,7 +289,7 @@ public class AddMedsFragment extends Fragment implements TimePickerDialog.OnTime
                             public void onFailure(@NonNull Exception e) {
                                 // Write failed
 
-                                Toast.makeText(getActivity(), "Failed To Add New Drug", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), R.string.add_drug_err, Toast.LENGTH_SHORT).show();
                             }
                         });
 

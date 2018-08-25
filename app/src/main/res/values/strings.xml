@@ -4,13 +4,13 @@
     <string name="blood_pressure">Blood Pressure</string>
     <string name="weight">Weight</string>
     <string name="medicines">Medicines</string>
-    <string name="add_medicine">Medicine</string>
+    <string name="add_medicine">Add Medicine</string>
     <string name="settings">Settings</string>
     <string name="measurements">Measurements</string>
     <string name="mediciton_name">Medicine Name</string>
     <string name="reminder_times">Reminder Times</string>
     <string name="search_here">Search Here</string>
-    <string name="pick_a_time">pick a type</string>
+    <string name="pick_a_time">Pick date/time</string>
     <string name="enter">enter</string>
     <string name="dose">Dose</string>
     <string name="every_day">Every Day</string>
@@ -31,6 +31,14 @@
     <string name="sign_up">Sign Up</string>
     <string name="enter_age">Enter Age</string>
     <string name="err_enter_measure_type">Please Choose Measure Type</string>
+    <string name="err_enter_auth">Authentication failed.</string>
+    <string name="enter_day">Please Select Day</string>
+    <string name="add_msg_drug">Drug Added Successfully </string>
+    <string name="add_drug_err">Failed To Add New Drug </string>
+    <string name="add_meas_msg">Measure Added Successfully</string>
+    <string name="add_meas_err">Failed To Add New Measure</string>
+    <string name="fab_med">Add New Medicine</string>
+    <string name="fab_meas">Add New Measure</string>
 
 
     <string-array name="reminder_array">

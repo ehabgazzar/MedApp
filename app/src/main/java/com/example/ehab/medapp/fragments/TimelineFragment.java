@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ehab.medapp.R;
@@ -30,11 +32,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 
+import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,18 +57,22 @@ public class TimelineFragment extends Fragment  {
     RecyclerView event_recycler_view_parent;
 
     DayPartAdapter event_list_parent_adapter;
-    private static final DateFormat FORMATTER = SimpleDateFormat.getDateInstance();
-    public final static String LIST_STATE_KEY = "recycler_list_state";
+
+    private final  String LIST_STATE_KEY = "recycler_list_state";
+    private final  String LIST_dayParts_data_KEY = "recycler_dayparts";
+
     Parcelable listState;
     private LinearLayoutManager mLayoutManager;
-
-    public static FirebaseAuth mAuth;
+    TextView toolbarTitle;
+    FloatingActionButton fab;
+   private FirebaseAuth mAuth;
     private ArrayList<Drug> drugs;
     private ArrayList<DayPart> dayParts;
-    public static FirebaseDatabase database;
+   public static FirebaseDatabase database;
     public static FirebaseUser firebaseUser;
     public static DatabaseReference mDatabase;
-    static int currentVisiblePosition = 0;
+    Gson gson;
+    Type partListType = new TypeToken<List<DayPart>>() {}.getType();
     public TimelineFragment() {
         // Required empty public constructor
     }
@@ -74,6 +84,8 @@ public class TimelineFragment extends Fragment  {
         // Save list state
         listState = mLayoutManager.onSaveInstanceState();
         state.putParcelable(LIST_STATE_KEY, listState);
+        state.putString(LIST_dayParts_data_KEY,gson.toJson(dayParts,partListType));
+
     }
 
     @Override
@@ -83,6 +95,10 @@ public class TimelineFragment extends Fragment  {
         if (savedInstanceState != null) {
 
             listState = savedInstanceState.getParcelable(LIST_STATE_KEY);
+            dayParts= gson.fromJson(savedInstanceState.getString(LIST_dayParts_data_KEY), partListType);
+            if(dayParts != null) {
+                event_list_parent_adapter.addItem(dayParts);
+            }
 
         }
 }
@@ -105,26 +121,41 @@ public class TimelineFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        gson=new Gson();
+        dayParts = new ArrayList<>();
         View view = inflater.inflate(R.layout.fragment_timeline, container, false);
         ButterKnife.bind(this, view);
+        toolbarTitle=getActivity().findViewById(R.id.toolbar_title);
+        toolbarTitle.setText(R.string.time_line);
+        fab=getActivity().findViewById(R.id.fab);
 
+        if(mDatabase==null) {
+            database = FirebaseDatabase.getInstance();
+            database.setPersistenceEnabled(true);
+            mDatabase = database.getReference();
+        }
+        mAuth = FirebaseAuth.getInstance();
+        firebaseUser = mAuth.getCurrentUser();
+        event_list_parent_adapter = new DayPartAdapter(new ArrayList<DayPart>(), getActivity());
+        event_recycler_view_parent.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        event_recycler_view_parent.setLayoutManager(mLayoutManager);
 
-        init();
+        event_recycler_view_parent.setItemAnimator(new DefaultItemAnimator());
+        event_recycler_view_parent.setAdapter(event_list_parent_adapter);
+        if(savedInstanceState==null) {
+
+            init();
+        }
         return view;
     }
 
     void init() {
-      dayParts = new ArrayList<>();
 
 
-      if(mDatabase==null) {
-          database = FirebaseDatabase.getInstance();
-          database.setPersistenceEnabled(true);
-          mDatabase = database.getReference();
-      }
 
-        mAuth = FirebaseAuth.getInstance();
-         firebaseUser = mAuth.getCurrentUser();
+
+
      //   mDatabase.child("users-drugs").child(firebaseUser.getUid()).child("morning").push().setValue(drugs);
         Query myTopPostsQuery = mDatabase.child("usersDrugs").child(firebaseUser.getUid());
         myTopPostsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -169,13 +200,7 @@ public class TimelineFragment extends Fragment  {
             }
         });
 
-        event_list_parent_adapter = new DayPartAdapter(new ArrayList<DayPart>(), getActivity());
-        event_recycler_view_parent.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        event_recycler_view_parent.setLayoutManager(mLayoutManager);
 
-        event_recycler_view_parent.setItemAnimator(new DefaultItemAnimator());
-        event_recycler_view_parent.setAdapter(event_list_parent_adapter);
     }
 
 

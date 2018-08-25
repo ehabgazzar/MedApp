@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:layout_marginLeft="2dp"
+    android:layout_marginStart="2dp"
     android:layout_marginTop="16dp">
 
     <ImageView
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:text="10 AM"
+
         app:layout_constraintBottom_toBottomOf="@+id/drug_iv_status"
         app:layout_constraintStart_toEndOf="@+id/drug_iv_status"
         app:layout_constraintTop_toTopOf="@+id/drug_iv_status"
@@ -35,7 +35,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Drug Name xyz "
         app:layout_constraintBottom_toBottomOf="@+id/drug_iv_status"
         app:layout_constraintStart_toEndOf="@+id/drug_tv_time"
         app:layout_constraintTop_toTopOf="@+id/drug_iv_status"

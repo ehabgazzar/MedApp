@@ -13,12 +13,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.ehab.medapp.R;
 import com.example.ehab.medapp.adapters.MeasurementsAdapter;
 import com.example.ehab.medapp.models.Measure;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
@@ -27,9 +32,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.example.ehab.medapp.fragments.TimelineFragment.LIST_STATE_KEY;
-import static com.example.ehab.medapp.fragments.TimelineFragment.firebaseUser;
-import static com.example.ehab.medapp.fragments.TimelineFragment.mDatabase;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,6 +45,12 @@ public class PressureFragment extends Fragment {
     private ArrayList<Measure> measures;
     private LinearLayoutManager mLayoutManager;
     private Parcelable listState;
+    private FirebaseDatabase database;
+    TextView toolbarTitle;
+    private FirebaseUser firebaseUser;
+    private DatabaseReference mDatabase;
+    private final  String LIST_STATE_KEY = "recycler_list_state";
+    private FirebaseAuth mAuth;
 
     public PressureFragment() {
         // Required empty public constructor
@@ -68,14 +77,6 @@ public class PressureFragment extends Fragment {
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (listState != null) {
-            mLayoutManager.onRestoreInstanceState(listState);
-
-        }
-    }
 
 
     @Override
@@ -85,7 +86,13 @@ public class PressureFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_pressure, container, false);
         ButterKnife.bind(this,view);
          measures = new ArrayList<>();
+        if(mDatabase==null) {
+            database = FirebaseDatabase.getInstance();
 
+            mDatabase = database.getReference();
+        }
+        mAuth = FirebaseAuth.getInstance();
+        firebaseUser = mAuth.getCurrentUser();
         Query myTopPostsQuery = mDatabase.child("usersMeasures").child(firebaseUser.getUid()).child("Blood Pressure");
         myTopPostsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
